@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="878afbafcd1948889f3cc3fbdc5be9a2" Name="Diagram1">
+        <EntityTypeShape EntityType="DBHOTELModel.ASIGNACION" Width="1.5" PointX="5.25" PointY="1.5" />
+        <EntityTypeShape EntityType="DBHOTELModel.HABITACION" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="DBHOTELModel.HUESPED" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="DBHOTELModel.REGISTRO" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="DBHOTELModel.SERVICIO" Width="1.5" PointX="7.5" PointY="8.5" />
+        <EntityTypeShape EntityType="DBHOTELModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DBHOTELModel.TIPO" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DBHOTELModel.TIPO_DOCUMENTO" Width="1.5" PointX="5.25" PointY="5.625" />
+        <EntityTypeShape EntityType="DBHOTELModel.TipoServicio" Width="1.5" PointX="5.25" PointY="8.75" />
+        <EntityTypeShape EntityType="DBHOTELModel.TRANSACCION" Width="1.5" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="DBHOTELModel.TRANSACCION_DETALLE" Width="1.5" PointX="9.75" PointY="1.375" />
+        <AssociationConnector Association="DBHOTELModel.FK_ASIGNACION_HABITACION" />
+        <AssociationConnector Association="DBHOTELModel.FK_ASIGNACION_REGISTRO" />
+        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_ASIGNACION" />
+        <AssociationConnector Association="DBHOTELModel.FK_HABITACION_TIPO" />
+        <AssociationConnector Association="DBHOTELModel.FK_REGISTRO_HUESPED" />
+        <AssociationConnector Association="DBHOTELModel.FK_SERVICIO_TipoServicio" />
+        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO" />
+        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO" />
+        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

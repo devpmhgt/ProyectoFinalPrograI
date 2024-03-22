@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBHOTELModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DBHOTEL.dbo.ASIGNACION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ASIGNACION">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+      <PropertyRef Name="IdHuesped" />
+      <PropertyRef Name="IdHabitacion" />
+    </Key>
+    <Property Name="IdRegistro" Type="int" Nullable="false" />
+    <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdHabitacion" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HABITACION">
+    <Key>
+      <PropertyRef Name="IdHabitacion" />
+    </Key>
+    <Property Name="IdHabitacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTipo" Type="int" Nullable="false" />
+    <Property Name="Nivel" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Comentario" Type="nvarchar" MaxLength="50" />
+    <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HUESPED">
+    <Key>
+      <PropertyRef Name="DPI" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DPI" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REGISTRO">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+    </Key>
+    <Property Name="IdRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FechaHoraReserva" Type="date" />
+    <Property Name="FechaHoraIngreso" Type="date" />
+    <Property Name="FechaHoraFinRegistro" Type="date" />
+    <Property Name="TotalPago" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TIPO">
+    <Key>
+      <PropertyRef Name="IdTipo" />
+    </Key>
+    <Property Name="IdTipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ASIGNACION_HABITACION">
+    <End Role="HABITACION" Type="Self.HABITACION" Multiplicity="1" />
+    <End Role="ASIGNACION" Type="Self.ASIGNACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HABITACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ASIGNACION_REGISTRO">
+    <End Role="REGISTRO" Type="Self.REGISTRO" Multiplicity="1" />
+    <End Role="ASIGNACION" Type="Self.ASIGNACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGISTRO">
+        <PropertyRef Name="IdRegistro" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HABITACION_TIPO">
+    <End Role="TIPO" Type="Self.TIPO" Multiplicity="1" />
+    <End Role="HABITACION" Type="Self.HABITACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO">
+        <PropertyRef Name="IdTipo" />
+      </Principal>
+      <Dependent Role="HABITACION">
+        <PropertyRef Name="IdTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REGISTRO_HUESPED">
+    <End Role="HUESPED" Type="Self.HUESPED" Multiplicity="1" />
+    <End Role="REGISTRO" Type="Self.REGISTRO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HUESPED">
+        <PropertyRef Name="DPI" />
+      </Principal>
+      <Dependent Role="REGISTRO">
+        <PropertyRef Name="IdHuesped" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="DBHOTELModelStoreContainer">
+    <EntitySet Name="HABITACION" EntityType="Self.HABITACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HUESPED" EntityType="Self.HUESPED" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REGISTRO" EntityType="Self.REGISTRO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO" EntityType="Self.TIPO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ASIGNACION" EntityType="Self.ASIGNACION" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ASIGNACION].[IdRegistro] AS [IdRegistro], 
+    [ASIGNACION].[IdHuesped] AS [IdHuesped], 
+    [ASIGNACION].[IdHabitacion] AS [IdHabitacion]
+    FROM [dbo].[ASIGNACION] AS [ASIGNACION]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="Self.FK_ASIGNACION_HABITACION">
+      <End Role="HABITACION" EntitySet="HABITACION" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ASIGNACION_REGISTRO" Association="Self.FK_ASIGNACION_REGISTRO">
+      <End Role="REGISTRO" EntitySet="REGISTRO" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HABITACION_TIPO" Association="Self.FK_HABITACION_TIPO">
+      <End Role="TIPO" EntitySet="TIPO" />
+      <End Role="HABITACION" EntitySet="HABITACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REGISTRO_HUESPED" Association="Self.FK_REGISTRO_HUESPED">
+      <End Role="HUESPED" EntitySet="HUESPED" />
+      <End Role="REGISTRO" EntitySet="REGISTRO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

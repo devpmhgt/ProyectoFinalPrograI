@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBHOTELModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ASIGNACION">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+    </Key>
+    <Property Name="IdRegistro" Type="int" Nullable="false" />
+    <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdHabitacion" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HABITACION">
+    <Key>
+      <PropertyRef Name="IdHabitacion" />
+    </Key>
+    <Property Name="IdHabitacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTipo" Type="int" Nullable="false" />
+    <Property Name="Nivel" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Comentario" Type="nvarchar" MaxLength="50" />
+    <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Disponible" Type="nchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="HUESPED">
+    <Key>
+      <PropertyRef Name="DPI" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DPI" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REGISTRO">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+    </Key>
+    <Property Name="IdRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FechaHoraReserva" Type="datetime" />
+    <Property Name="FechaHoraIngreso" Type="datetime" />
+    <Property Name="FechaHoraFinRegistro" Type="datetime" />
+    <Property Name="TotalPago" Type="varchar" MaxLength="50" />
+    <Property Name="ReservaActiva" Type="nchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="SERVICIO">
+    <Key>
+      <PropertyRef Name="IdServicio" />
+    </Key>
+    <Property Name="IdServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+    <Property Name="Precio" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="IdTipoServicio" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TIPO">
+    <Key>
+      <PropertyRef Name="IdTipo" />
+    </Key>
+    <Property Name="IdTipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPO_DOCUMENTO">
+    <Key>
+      <PropertyRef Name="IdTipoDoc" />
+    </Key>
+    <Property Name="IdTipoDoc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+    <Property Name="Factor" Type="nchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="TipoServicio">
+    <Key>
+      <PropertyRef Name="IdTipoServicio" />
+    </Key>
+    <Property Name="IdTipoServicio" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TRANSACCION">
+    <Key>
+      <PropertyRef Name="Documento" />
+    </Key>
+    <Property Name="Documento" Type="int" Nullable="false" />
+    <Property Name="IdRegistro" Type="int" Nullable="false" />
+    <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdHabitacion" Type="int" />
+    <Property Name="IdTipoDoc" Type="int" />
+    <Property Name="Fecha" Type="datetime" />
+    <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DBHOTEL.dbo.TRANSACCION_DETALLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TRANSACCION_DETALLE">
+    <Key>
+      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdServicio" />
+      <PropertyRef Name="IDTipoDoc" />
+    </Key>
+    <Property Name="Documento" Type="int" Nullable="false" />
+    <Property Name="IdServicio" Type="int" Nullable="false" />
+    <Property Name="IDTipoDoc" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Total" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ASIGNACION_HABITACION">
+    <End Role="HABITACION" Type="Self.HABITACION" Multiplicity="1" />
+    <End Role="ASIGNACION" Type="Self.ASIGNACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HABITACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ASIGNACION_REGISTRO">
+    <End Role="REGISTRO" Type="Self.REGISTRO" Multiplicity="1" />
+    <End Role="ASIGNACION" Type="Self.ASIGNACION" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="REGISTRO">
+        <PropertyRef Name="IdRegistro" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HABITACION_TIPO">
+    <End Role="TIPO" Type="Self.TIPO" Multiplicity="1" />
+    <End Role="HABITACION" Type="Self.HABITACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO">
+        <PropertyRef Name="IdTipo" />
+      </Principal>
+      <Dependent Role="HABITACION">
+        <PropertyRef Name="IdTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REGISTRO_HUESPED">
+    <End Role="HUESPED" Type="Self.HUESPED" Multiplicity="1" />
+    <End Role="REGISTRO" Type="Self.REGISTRO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HUESPED">
+        <PropertyRef Name="DPI" />
+      </Principal>
+      <Dependent Role="REGISTRO">
+        <PropertyRef Name="IdHuesped" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SERVICIO_TipoServicio">
+    <End Role="TipoServicio" Type="Self.TipoServicio" Multiplicity="0..1" />
+    <End Role="SERVICIO" Type="Self.SERVICIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoServicio">
+        <PropertyRef Name="IdTipoServicio" />
+      </Principal>
+      <Dependent Role="SERVICIO">
+        <PropertyRef Name="IdTipoServicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_DETALLE_SERVICIO">
+    <End Role="SERVICIO" Type="Self.SERVICIO" Multiplicity="1" />
+    <End Role="TRANSACCION_DETALLE" Type="Self.TRANSACCION_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SERVICIO">
+        <PropertyRef Name="IdServicio" />
+      </Principal>
+      <Dependent Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="IdServicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_DETALLE_TRANSACCION">
+    <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="1" />
+    <End Role="TRANSACCION_DETALLE" Type="Self.TRANSACCION_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANSACCION">
+        <PropertyRef Name="Documento" />
+      </Principal>
+      <Dependent Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="Documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_REGISTRO">
+    <End Role="REGISTRO" Type="Self.REGISTRO" Multiplicity="1" />
+    <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGISTRO">
+        <PropertyRef Name="IdRegistro" />
+      </Principal>
+      <Dependent Role="TRANSACCION">
+        <PropertyRef Name="IdRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_TIPO_DOCUMENTO">
+    <End Role="TIPO_DOCUMENTO" Type="Self.TIPO_DOCUMENTO" Multiplicity="0..1" />
+    <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_DOCUMENTO">
+        <PropertyRef Name="IdTipoDoc" />
+      </Principal>
+      <Dependent Role="TRANSACCION">
+        <PropertyRef Name="IdTipoDoc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="DBHOTELModelStoreContainer">
+    <EntitySet Name="ASIGNACION" EntityType="Self.ASIGNACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HABITACION" EntityType="Self.HABITACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HUESPED" EntityType="Self.HUESPED" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REGISTRO" EntityType="Self.REGISTRO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SERVICIO" EntityType="Self.SERVICIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO" EntityType="Self.TIPO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoServicio" EntityType="Self.TipoServicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRANSACCION" EntityType="Self.TRANSACCION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRANSACCION_DETALLE" EntityType="Self.TRANSACCION_DETALLE" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TRANSACCION_DETALLE].[Documento] AS [Documento], 
+    [TRANSACCION_DETALLE].[IdServicio] AS [IdServicio], 
+    [TRANSACCION_DETALLE].[IDTipoDoc] AS [IDTipoDoc], 
+    [TRANSACCION_DETALLE].[Cantidad] AS [Cantidad], 
+    [TRANSACCION_DETALLE].[Total] AS [Total]
+    FROM [dbo].[TRANSACCION_DETALLE] AS [TRANSACCION_DETALLE]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="Self.FK_ASIGNACION_HABITACION">
+      <End Role="HABITACION" EntitySet="HABITACION" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ASIGNACION_REGISTRO" Association="Self.FK_ASIGNACION_REGISTRO">
+      <End Role="REGISTRO" EntitySet="REGISTRO" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HABITACION_TIPO" Association="Self.FK_HABITACION_TIPO">
+      <End Role="TIPO" EntitySet="TIPO" />
+      <End Role="HABITACION" EntitySet="HABITACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REGISTRO_HUESPED" Association="Self.FK_REGISTRO_HUESPED">
+      <End Role="HUESPED" EntitySet="HUESPED" />
+      <End Role="REGISTRO" EntitySet="REGISTRO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SERVICIO_TipoServicio" Association="Self.FK_SERVICIO_TipoServicio">
+      <End Role="TipoServicio" EntitySet="TipoServicio" />
+      <End Role="SERVICIO" EntitySet="SERVICIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_DETALLE_SERVICIO" Association="Self.FK_TRANSACCION_DETALLE_SERVICIO">
+      <End Role="SERVICIO" EntitySet="SERVICIO" />
+      <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_DETALLE_TRANSACCION" Association="Self.FK_TRANSACCION_DETALLE_TRANSACCION">
+      <End Role="TRANSACCION" EntitySet="TRANSACCION" />
+      <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_REGISTRO" Association="Self.FK_TRANSACCION_REGISTRO">
+      <End Role="REGISTRO" EntitySet="REGISTRO" />
+      <End Role="TRANSACCION" EntitySet="TRANSACCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_TIPO_DOCUMENTO" Association="Self.FK_TRANSACCION_TIPO_DOCUMENTO">
+      <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+      <End Role="TRANSACCION" EntitySet="TRANSACCION" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

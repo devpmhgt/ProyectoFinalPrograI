@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBHOTELModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DBHOTELEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DBHOTELModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DBHOTELModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="HABITACIONs" EntityType="DBHOTELModel.HABITACION" />
+    <EntitySet Name="HUESPEDs" EntityType="DBHOTELModel.HUESPED" />
+    <EntitySet Name="REGISTROes" EntityType="DBHOTELModel.REGISTRO" />
+    <EntitySet Name="sysdiagrams" EntityType="DBHOTELModel.sysdiagram" />
+    <EntitySet Name="TIPOes" EntityType="DBHOTELModel.TIPO" />
+    <EntitySet Name="ASIGNACIONs" EntityType="DBHOTELModel.ASIGNACION" />
+    <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="DBHOTELModel.FK_ASIGNACION_HABITACION">
+      <End Role="HABITACION" EntitySet="HABITACIONs" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HABITACION_TIPO" Association="DBHOTELModel.FK_HABITACION_TIPO">
+      <End Role="TIPO" EntitySet="TIPOes" />
+      <End Role="HABITACION" EntitySet="HABITACIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REGISTRO_HUESPED" Association="DBHOTELModel.FK_REGISTRO_HUESPED">
+      <End Role="HUESPED" EntitySet="HUESPEDs" />
+      <End Role="REGISTRO" EntitySet="REGISTROes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ASIGNACION_REGISTRO" Association="DBHOTELModel.FK_ASIGNACION_REGISTRO">
+      <End Role="REGISTRO" EntitySet="REGISTROes" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="HABITACION">
+    <Key>
+      <PropertyRef Name="IdHabitacion" />
+    </Key>
+    <Property Name="IdHabitacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdTipo" Type="Int32" Nullable="false" />
+    <Property Name="Nivel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comentario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <NavigationProperty Name="ASIGNACIONs" Relationship="DBHOTELModel.FK_ASIGNACION_HABITACION" FromRole="HABITACION" ToRole="ASIGNACION" />
+    <NavigationProperty Name="TIPO" Relationship="DBHOTELModel.FK_HABITACION_TIPO" FromRole="HABITACION" ToRole="TIPO" />
+  </EntityType>
+  <EntityType Name="HUESPED">
+    <Key>
+      <PropertyRef Name="DPI" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DPI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="REGISTROes" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="HUESPED" ToRole="REGISTRO" />
+  </EntityType>
+  <EntityType Name="REGISTRO">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+    </Key>
+    <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaHoraReserva" Type="DateTime" Precision="0" />
+    <Property Name="FechaHoraIngreso" Type="DateTime" Precision="0" />
+    <Property Name="FechaHoraFinRegistro" Type="DateTime" Precision="0" />
+    <Property Name="TotalPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="HUESPED" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="REGISTRO" ToRole="HUESPED" />
+    <NavigationProperty Name="ASIGNACIONs" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="REGISTRO" ToRole="ASIGNACION" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TIPO">
+    <Key>
+      <PropertyRef Name="IdTipo" />
+    </Key>
+    <Property Name="IdTipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="HABITACIONs" Relationship="DBHOTELModel.FK_HABITACION_TIPO" FromRole="TIPO" ToRole="HABITACION" />
+  </EntityType>
+  <EntityType Name="ASIGNACION">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+      <PropertyRef Name="IdHuesped" />
+      <PropertyRef Name="IdHabitacion" />
+    </Key>
+    <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+    <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdHabitacion" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="HABITACION" Relationship="DBHOTELModel.FK_ASIGNACION_HABITACION" FromRole="ASIGNACION" ToRole="HABITACION" />
+    <NavigationProperty Name="REGISTRO" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="ASIGNACION" ToRole="REGISTRO" />
+  </EntityType>
+  <Association Name="FK_ASIGNACION_HABITACION">
+    <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="1" />
+    <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HABITACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HABITACION_TIPO">
+    <End Type="DBHOTELModel.TIPO" Role="TIPO" Multiplicity="1" />
+    <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO">
+        <PropertyRef Name="IdTipo" />
+      </Principal>
+      <Dependent Role="HABITACION">
+        <PropertyRef Name="IdTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REGISTRO_HUESPED">
+    <End Type="DBHOTELModel.HUESPED" Role="HUESPED" Multiplicity="1" />
+    <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HUESPED">
+        <PropertyRef Name="DPI" />
+      </Principal>
+      <Dependent Role="REGISTRO">
+        <PropertyRef Name="IdHuesped" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ASIGNACION_REGISTRO">
+    <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="1" />
+    <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGISTRO">
+        <PropertyRef Name="IdRegistro" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBHOTELModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DBHOTELEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DBHOTELModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DBHOTELModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="ASIGNACIONs" EntityType="DBHOTELModel.ASIGNACION" />
+    <EntitySet Name="HABITACIONs" EntityType="DBHOTELModel.HABITACION" />
+    <EntitySet Name="HUESPEDs" EntityType="DBHOTELModel.HUESPED" />
+    <EntitySet Name="REGISTROes" EntityType="DBHOTELModel.REGISTRO" />
+    <EntitySet Name="SERVICIOs" EntityType="DBHOTELModel.SERVICIO" />
+    <EntitySet Name="sysdiagrams" EntityType="DBHOTELModel.sysdiagram" />
+    <EntitySet Name="TIPOes" EntityType="DBHOTELModel.TIPO" />
+    <EntitySet Name="TIPO_DOCUMENTO" EntityType="DBHOTELModel.TIPO_DOCUMENTO" />
+    <EntitySet Name="TipoServicios" EntityType="DBHOTELModel.TipoServicio" />
+    <EntitySet Name="TRANSACCIONs" EntityType="DBHOTELModel.TRANSACCION" />
+    <EntitySet Name="TRANSACCION_DETALLE" EntityType="DBHOTELModel.TRANSACCION_DETALLE" />
+    <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="DBHOTELModel.FK_ASIGNACION_HABITACION">
+      <End Role="HABITACION" EntitySet="HABITACIONs" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ASIGNACION_REGISTRO" Association="DBHOTELModel.FK_ASIGNACION_REGISTRO">
+      <End Role="REGISTRO" EntitySet="REGISTROes" />
+      <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_ASIGNACION" Association="DBHOTELModel.FK_TRANSACCION_ASIGNACION">
+      <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
+      <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HABITACION_TIPO" Association="DBHOTELModel.FK_HABITACION_TIPO">
+      <End Role="TIPO" EntitySet="TIPOes" />
+      <End Role="HABITACION" EntitySet="HABITACIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REGISTRO_HUESPED" Association="DBHOTELModel.FK_REGISTRO_HUESPED">
+      <End Role="HUESPED" EntitySet="HUESPEDs" />
+      <End Role="REGISTRO" EntitySet="REGISTROes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SERVICIO_TipoServicio" Association="DBHOTELModel.FK_SERVICIO_TipoServicio">
+      <End Role="TipoServicio" EntitySet="TipoServicios" />
+      <End Role="SERVICIO" EntitySet="SERVICIOs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_DETALLE_SERVICIO" Association="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO">
+      <End Role="SERVICIO" EntitySet="SERVICIOs" />
+      <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_TIPO_DOCUMENTO" Association="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO">
+      <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+      <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_DETALLE_TRANSACCION" Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION">
+      <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
+      <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="ASIGNACION">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+    </Key>
+    <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+    <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdHabitacion" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="HABITACION" Relationship="DBHOTELModel.FK_ASIGNACION_HABITACION" FromRole="ASIGNACION" ToRole="HABITACION" />
+    <NavigationProperty Name="REGISTRO" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="ASIGNACION" ToRole="REGISTRO" />
+    <NavigationProperty Name="TRANSACCIONs" Relationship="DBHOTELModel.FK_TRANSACCION_ASIGNACION" FromRole="ASIGNACION" ToRole="TRANSACCION" />
+  </EntityType>
+  <EntityType Name="HABITACION">
+    <Key>
+      <PropertyRef Name="IdHabitacion" />
+    </Key>
+    <Property Name="IdHabitacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdTipo" Type="Int32" Nullable="false" />
+    <Property Name="Nivel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comentario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="Disponible" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="ASIGNACIONs" Relationship="DBHOTELModel.FK_ASIGNACION_HABITACION" FromRole="HABITACION" ToRole="ASIGNACION" />
+    <NavigationProperty Name="TIPO" Relationship="DBHOTELModel.FK_HABITACION_TIPO" FromRole="HABITACION" ToRole="TIPO" />
+  </EntityType>
+  <EntityType Name="HUESPED">
+    <Key>
+      <PropertyRef Name="DPI" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DPI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="REGISTROes" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="HUESPED" ToRole="REGISTRO" />
+  </EntityType>
+  <EntityType Name="REGISTRO">
+    <Key>
+      <PropertyRef Name="IdRegistro" />
+    </Key>
+    <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaHoraReserva" Type="DateTime" Precision="3" />
+    <Property Name="FechaHoraIngreso" Type="DateTime" Precision="3" />
+    <Property Name="FechaHoraFinRegistro" Type="DateTime" Precision="3" />
+    <Property Name="TotalPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ReservaActiva" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="FechaReservaInicio" Type="DateTime" Precision="3" />
+    <Property Name="FechaReservaFinal" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="REGISTRO" ToRole="ASIGNACION" />
+    <NavigationProperty Name="HUESPED" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="REGISTRO" ToRole="HUESPED" />
+  </EntityType>
+  <EntityType Name="SERVICIO">
+    <Key>
+      <PropertyRef Name="IdServicio" />
+    </Key>
+    <Property Name="IdServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IdTipoServicio" Type="Int32" />
+    <NavigationProperty Name="TipoServicio" Relationship="DBHOTELModel.FK_SERVICIO_TipoServicio" FromRole="SERVICIO" ToRole="TipoServicio" />
+    <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO" FromRole="SERVICIO" ToRole="TRANSACCION_DETALLE" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TIPO">
+    <Key>
+      <PropertyRef Name="IdTipo" />
+    </Key>
+    <Property Name="IdTipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="HABITACIONs" Relationship="DBHOTELModel.FK_HABITACION_TIPO" FromRole="TIPO" ToRole="HABITACION" />
+  </EntityType>
+  <EntityType Name="TIPO_DOCUMENTO">
+    <Key>
+      <PropertyRef Name="IdTipoDoc" />
+    </Key>
+    <Property Name="IdTipoDoc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Factor" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="TRANSACCIONs" Relationship="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO" FromRole="TIPO_DOCUMENTO" ToRole="TRANSACCION" />
+  </EntityType>
+  <EntityType Name="TipoServicio">
+    <Key>
+      <PropertyRef Name="IdTipoServicio" />
+    </Key>
+    <Property Name="IdTipoServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SERVICIOs" Relationship="DBHOTELModel.FK_SERVICIO_TipoServicio" FromRole="TipoServicio" ToRole="SERVICIO" />
+  </EntityType>
+  <EntityType Name="TRANSACCION">
+    <Key>
+      <PropertyRef Name="Documento" />
+    </Key>
+    <Property Name="Documento" Type="Int32" Nullable="false" />
+    <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+    <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdHabitacion" Type="Int32" />
+    <Property Name="IdTipoDoc" Type="Int32" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_TRANSACCION_ASIGNACION" FromRole="TRANSACCION" ToRole="ASIGNACION" />
+    <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO" FromRole="TRANSACCION" ToRole="TIPO_DOCUMENTO" />
+    <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" FromRole="TRANSACCION" ToRole="TRANSACCION_DETALLE" />
+  </EntityType>
+  <EntityType Name="TRANSACCION_DETALLE">
+    <Key>
+      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdServicio" />
+      <PropertyRef Name="IDTipoDoc" />
+    </Key>
+    <Property Name="Documento" Type="Int32" Nullable="false" />
+    <Property Name="IdServicio" Type="Int32" Nullable="false" />
+    <Property Name="IDTipoDoc" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SERVICIO" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO" FromRole="TRANSACCION_DETALLE" ToRole="SERVICIO" />
+    <NavigationProperty Name="TRANSACCION" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" FromRole="TRANSACCION_DETALLE" ToRole="TRANSACCION" />
+  </EntityType>
+  <Association Name="FK_ASIGNACION_HABITACION">
+    <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="1" />
+    <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HABITACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdHabitacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ASIGNACION_REGISTRO">
+    <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="1" />
+    <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="REGISTRO">
+        <PropertyRef Name="IdRegistro" />
+      </Principal>
+      <Dependent Role="ASIGNACION">
+        <PropertyRef Name="IdRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_ASIGNACION">
+    <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="1" />
+    <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ASIGNACION">
+        <PropertyRef Name="IdRegistro" />
+      </Principal>
+      <Dependent Role="TRANSACCION">
+        <PropertyRef Name="IdRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HABITACION_TIPO">
+    <End Type="DBHOTELModel.TIPO" Role="TIPO" Multiplicity="1" />
+    <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO">
+        <PropertyRef Name="IdTipo" />
+      </Principal>
+      <Dependent Role="HABITACION">
+        <PropertyRef Name="IdTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REGISTRO_HUESPED">
+    <End Type="DBHOTELModel.HUESPED" Role="HUESPED" Multiplicity="1" />
+    <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HUESPED">
+        <PropertyRef Name="DPI" />
+      </Principal>
+      <Dependent Role="REGISTRO">
+        <PropertyRef Name="IdHuesped" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SERVICIO_TipoServicio">
+    <End Type="DBHOTELModel.TipoServicio" Role="TipoServicio" Multiplicity="0..1" />
+    <End Type="DBHOTELModel.SERVICIO" Role="SERVICIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoServicio">
+        <PropertyRef Name="IdTipoServicio" />
+      </Principal>
+      <Dependent Role="SERVICIO">
+        <PropertyRef Name="IdTipoServicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_DETALLE_SERVICIO">
+    <End Type="DBHOTELModel.SERVICIO" Role="SERVICIO" Multiplicity="1" />
+    <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SERVICIO">
+        <PropertyRef Name="IdServicio" />
+      </Principal>
+      <Dependent Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="IdServicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_TIPO_DOCUMENTO">
+    <End Type="DBHOTELModel.TIPO_DOCUMENTO" Role="TIPO_DOCUMENTO" Multiplicity="0..1" />
+    <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_DOCUMENTO">
+        <PropertyRef Name="IdTipoDoc" />
+      </Principal>
+      <Dependent Role="TRANSACCION">
+        <PropertyRef Name="IdTipoDoc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_DETALLE_TRANSACCION">
+    <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="1" />
+    <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANSACCION">
+        <PropertyRef Name="Documento" />
+      </Principal>
+      <Dependent Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="Documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
