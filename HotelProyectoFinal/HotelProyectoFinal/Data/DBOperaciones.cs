@@ -40,7 +40,8 @@ namespace HotelProyectoFinal
                                                    Ingreso = registro.FechaHoraIngreso,
                                                    Salida = registro.FechaHoraFinRegistro,
                                                    Nivel = habitacion.Nivel,
-                                                   Comentario = habitacion.Comentario
+                                                   Comentario = habitacion.Comentario,
+                                                   IdHuesped = registro.IdHuesped
                                                }).ToList();
 
 

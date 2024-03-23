@@ -68,58 +68,58 @@
     <Compile Include="Data\DTOS.cs" />
     <Compile Include="Data\DBOperaciones.cs" />
     <Compile Include="Models\ASIGNACION.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HABITACION.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HUESPED.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MHOTEL.Context.cs">
+    <Compile Include="Models\MHotel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MHOTEL.Context.tt</DependentUpon>
+      <DependentUpon>MHotel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MHOTEL.cs">
+    <Compile Include="Models\MHotel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MHOTEL.Designer.cs">
+    <Compile Include="Models\MHotel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MHOTEL.edmx</DependentUpon>
+      <DependentUpon>MHotel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\REGISTRO.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SERVICIO.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoServicio.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_DOCUMENTO.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRANSACCION.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRANSACCION_DETALLE.cs">
-      <DependentUpon>MHOTEL.tt</DependentUpon>
+      <DependentUpon>MHotel.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\Inicio.cs">
       <SubType>Form</SubType>
@@ -160,12 +160,12 @@
     <EmbeddedResource Include="Views\UCServicios.resx">
       <DependentUpon>UCServicios.cs</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\MHOTEL.edmx">
+    <EntityDeploy Include="Models\MHotel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MHOTEL.Designer.cs</LastGenOutput>
+      <LastGenOutput>MHotel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\MHOTEL.edmx.diagram">
-      <DependentUpon>MHOTEL.edmx</DependentUpon>
+    <None Include="Models\MHotel.edmx.diagram">
+      <DependentUpon>MHotel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -194,15 +194,15 @@
     <None Include="assets\icons\pngwing.com.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\MHOTEL.Context.tt">
+    <Content Include="Models\MHotel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MHOTEL.edmx</DependentUpon>
-      <LastGenOutput>MHOTEL.Context.cs</LastGenOutput>
+      <DependentUpon>MHotel.edmx</DependentUpon>
+      <LastGenOutput>MHotel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\MHOTEL.tt">
+    <Content Include="Models\MHotel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MHOTEL.edmx</DependentUpon>
-      <LastGenOutput>MHOTEL.cs</LastGenOutput>
+      <DependentUpon>MHotel.edmx</DependentUpon>
+      <LastGenOutput>MHotel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

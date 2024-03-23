@@ -86,29 +86,26 @@
   </EntityType>
   <EntityType Name="TRANSACCION">
     <Key>
-      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdTransaccion" />
     </Key>
-    <Property Name="Documento" Type="int" Nullable="false" />
     <Property Name="IdRegistro" Type="int" Nullable="false" />
     <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="IdHabitacion" Type="int" />
     <Property Name="IdTipoDoc" Type="int" />
     <Property Name="Fecha" Type="datetime" />
     <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="IdTransaccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'DBHOTEL.dbo.TRANSACCION_DETALLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="TRANSACCION_DETALLE">
     <Key>
-      <PropertyRef Name="Documento" />
-      <PropertyRef Name="IdServicio" />
-      <PropertyRef Name="IDTipoDoc" />
+      <PropertyRef Name="IdHuesped" />
     </Key>
     <Property Name="Documento" Type="int" Nullable="false" />
     <Property Name="IdServicio" Type="int" Nullable="false" />
     <Property Name="IDTipoDoc" Type="int" Nullable="false" />
-    <Property Name="Cantidad" Type="nvarchar" MaxLength="50" />
-    <Property Name="Total" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cantidad" Type="int" />
+    <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <Association Name="FK_ASIGNACION_HABITACION">
     <End Role="HABITACION" Type="Self.HABITACION" Multiplicity="1" />
@@ -194,27 +191,27 @@ warning 6002: The table/view 'DBHOTEL.dbo.TRANSACCION_DETALLE' does not have a p
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TRANSACCION_DETALLE_TRANSACCION">
-    <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="1" />
+  <Association Name="FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO">
+    <End Role="TIPO_DOCUMENTO" Type="Self.TIPO_DOCUMENTO" Multiplicity="1" />
     <End Role="TRANSACCION_DETALLE" Type="Self.TRANSACCION_DETALLE" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TRANSACCION">
-        <PropertyRef Name="Documento" />
-      </Principal>
-      <Dependent Role="TRANSACCION_DETALLE">
-        <PropertyRef Name="Documento" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TRANSACCION_TIPO_DOCUMENTO">
-    <End Role="TIPO_DOCUMENTO" Type="Self.TIPO_DOCUMENTO" Multiplicity="0..1" />
-    <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TIPO_DOCUMENTO">
         <PropertyRef Name="IdTipoDoc" />
       </Principal>
+      <Dependent Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="IDTipoDoc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANSACCION_TRANSACCION_DETALLE">
+    <End Role="TRANSACCION_DETALLE" Type="Self.TRANSACCION_DETALLE" Multiplicity="1" />
+    <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="IdHuesped" />
+      </Principal>
       <Dependent Role="TRANSACCION">
-        <PropertyRef Name="IdTipoDoc" />
+        <PropertyRef Name="IdHuesped" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -260,15 +257,7 @@ warning 6002: The table/view 'DBHOTEL.dbo.TRANSACCION_DETALLE' does not have a p
     <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoServicio" EntityType="Self.TipoServicio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANSACCION" EntityType="Self.TRANSACCION" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TRANSACCION_DETALLE" EntityType="Self.TRANSACCION_DETALLE" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [TRANSACCION_DETALLE].[Documento] AS [Documento], 
-    [TRANSACCION_DETALLE].[IdServicio] AS [IdServicio], 
-    [TRANSACCION_DETALLE].[IDTipoDoc] AS [IDTipoDoc], 
-    [TRANSACCION_DETALLE].[Cantidad] AS [Cantidad], 
-    [TRANSACCION_DETALLE].[Total] AS [Total]
-    FROM [dbo].[TRANSACCION_DETALLE] AS [TRANSACCION_DETALLE]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="TRANSACCION_DETALLE" EntityType="Self.TRANSACCION_DETALLE" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="Self.FK_ASIGNACION_HABITACION">
       <End Role="HABITACION" EntitySet="HABITACION" />
       <End Role="ASIGNACION" EntitySet="ASIGNACION" />
@@ -297,12 +286,12 @@ warning 6002: The table/view 'DBHOTEL.dbo.TRANSACCION_DETALLE' does not have a p
       <End Role="SERVICIO" EntitySet="SERVICIO" />
       <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
     </AssociationSet>
-    <AssociationSet Name="FK_TRANSACCION_DETALLE_TRANSACCION" Association="Self.FK_TRANSACCION_DETALLE_TRANSACCION">
-      <End Role="TRANSACCION" EntitySet="TRANSACCION" />
+    <AssociationSet Name="FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO" Association="Self.FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO">
+      <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
       <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
     </AssociationSet>
-    <AssociationSet Name="FK_TRANSACCION_TIPO_DOCUMENTO" Association="Self.FK_TRANSACCION_TIPO_DOCUMENTO">
-      <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+    <AssociationSet Name="FK_TRANSACCION_TRANSACCION_DETALLE" Association="Self.FK_TRANSACCION_TRANSACCION_DETALLE">
+      <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
       <End Role="TRANSACCION" EntitySet="TRANSACCION" />
     </AssociationSet>
   </EntityContainer>

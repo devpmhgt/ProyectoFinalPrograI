@@ -14,23 +14,15 @@ namespace HotelProyectoFinal.Models
     
     public partial class TRANSACCION
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TRANSACCION()
-        {
-            this.TRANSACCION_DETALLE = new HashSet<TRANSACCION_DETALLE>();
-        }
-    
-        public int Documento { get; set; }
         public int IdRegistro { get; set; }
         public string IdHuesped { get; set; }
         public Nullable<int> IdHabitacion { get; set; }
         public Nullable<int> IdTipoDoc { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public int IdTransaccion { get; set; }
     
         public virtual ASIGNACION ASIGNACION { get; set; }
-        public virtual TIPO_DOCUMENTO TIPO_DOCUMENTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TRANSACCION_DETALLE> TRANSACCION_DETALLE { get; set; }
+        public virtual TRANSACCION_DETALLE TRANSACCION_DETALLE { get; set; }
     }
 }

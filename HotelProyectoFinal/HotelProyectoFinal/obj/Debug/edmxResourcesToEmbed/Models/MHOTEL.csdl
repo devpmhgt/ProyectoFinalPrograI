@@ -70,13 +70,13 @@
       <End Role="SERVICIO" EntitySet="SERVICIOs" />
       <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
     </AssociationSet>
-    <AssociationSet Name="FK_TRANSACCION_TIPO_DOCUMENTO" Association="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO">
+    <AssociationSet Name="FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO" Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO">
       <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
-      <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TRANSACCION_DETALLE_TRANSACCION" Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION">
-      <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
       <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANSACCION_TRANSACCION_DETALLE" Association="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE">
+      <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+      <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -177,7 +177,7 @@
     <Property Name="IdTipoDoc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Factor" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="TRANSACCIONs" Relationship="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO" FromRole="TIPO_DOCUMENTO" ToRole="TRANSACCION" />
+    <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO" FromRole="TIPO_DOCUMENTO" ToRole="TRANSACCION_DETALLE" />
   </EntityType>
   <EntityType Name="TipoServicio">
     <Key>
@@ -189,32 +189,31 @@
   </EntityType>
   <EntityType Name="TRANSACCION">
     <Key>
-      <PropertyRef Name="Documento" />
+      <PropertyRef Name="IdTransaccion" />
     </Key>
-    <Property Name="Documento" Type="Int32" Nullable="false" />
     <Property Name="IdRegistro" Type="Int32" Nullable="false" />
     <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IdHabitacion" Type="Int32" />
     <Property Name="IdTipoDoc" Type="Int32" />
     <Property Name="Fecha" Type="DateTime" Precision="3" />
     <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IdTransaccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_TRANSACCION_ASIGNACION" FromRole="TRANSACCION" ToRole="ASIGNACION" />
-    <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="DBHOTELModel.FK_TRANSACCION_TIPO_DOCUMENTO" FromRole="TRANSACCION" ToRole="TIPO_DOCUMENTO" />
-    <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" FromRole="TRANSACCION" ToRole="TRANSACCION_DETALLE" />
+    <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE" FromRole="TRANSACCION" ToRole="TRANSACCION_DETALLE" />
   </EntityType>
   <EntityType Name="TRANSACCION_DETALLE">
     <Key>
-      <PropertyRef Name="Documento" />
-      <PropertyRef Name="IdServicio" />
-      <PropertyRef Name="IDTipoDoc" />
+      <PropertyRef Name="IdHuesped" />
     </Key>
     <Property Name="Documento" Type="Int32" Nullable="false" />
     <Property Name="IdServicio" Type="Int32" Nullable="false" />
     <Property Name="IDTipoDoc" Type="Int32" Nullable="false" />
-    <Property Name="Cantidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="SERVICIO" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO" FromRole="TRANSACCION_DETALLE" ToRole="SERVICIO" />
-    <NavigationProperty Name="TRANSACCION" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" FromRole="TRANSACCION_DETALLE" ToRole="TRANSACCION" />
+    <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO" FromRole="TRANSACCION_DETALLE" ToRole="TIPO_DOCUMENTO" />
+    <NavigationProperty Name="TRANSACCIONs" Relationship="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE" FromRole="TRANSACCION_DETALLE" ToRole="TRANSACCION" />
   </EntityType>
   <Association Name="FK_ASIGNACION_HABITACION">
     <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="1" />
@@ -300,27 +299,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TRANSACCION_TIPO_DOCUMENTO">
-    <End Type="DBHOTELModel.TIPO_DOCUMENTO" Role="TIPO_DOCUMENTO" Multiplicity="0..1" />
-    <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="*" />
+  <Association Name="FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO">
+    <End Type="DBHOTELModel.TIPO_DOCUMENTO" Role="TIPO_DOCUMENTO" Multiplicity="1" />
+    <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TIPO_DOCUMENTO">
         <PropertyRef Name="IdTipoDoc" />
       </Principal>
-      <Dependent Role="TRANSACCION">
-        <PropertyRef Name="IdTipoDoc" />
+      <Dependent Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="IDTipoDoc" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TRANSACCION_DETALLE_TRANSACCION">
-    <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="1" />
-    <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="*" />
+  <Association Name="FK_TRANSACCION_TRANSACCION_DETALLE">
+    <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="1" />
+    <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TRANSACCION">
-        <PropertyRef Name="Documento" />
+      <Principal Role="TRANSACCION_DETALLE">
+        <PropertyRef Name="IdHuesped" />
       </Principal>
-      <Dependent Role="TRANSACCION_DETALLE">
-        <PropertyRef Name="Documento" />
+      <Dependent Role="TRANSACCION">
+        <PropertyRef Name="IdHuesped" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

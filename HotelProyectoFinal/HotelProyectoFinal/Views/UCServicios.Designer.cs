@@ -35,14 +35,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cmbxTipoServicio = new System.Windows.Forms.ComboBox();
             this.cmbxServicio = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.NUCantidad = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbxHabitacion = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUCantidad)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -71,7 +71,7 @@
             this.Buscar.TabIndex = 2;
             this.Buscar.Text = "Buscar";
             this.Buscar.UseVisualStyleBackColor = false;
-            this.Buscar.Click += new System.EventHandler(this.button1_Click);
+            this.Buscar.Click += new System.EventHandler(this.Buscar_Click);
             // 
             // txtDPI
             // 
@@ -124,23 +124,24 @@
             this.cmbxServicio.Size = new System.Drawing.Size(164, 26);
             this.cmbxServicio.TabIndex = 7;
             // 
-            // button1
+            // btnAgregar
             // 
-            this.button1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.button1.BackColor = System.Drawing.Color.YellowGreen;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.Location = new System.Drawing.Point(830, 194);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(111, 27);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Agregar";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnAgregar.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.btnAgregar.BackColor = System.Drawing.Color.YellowGreen;
+            this.btnAgregar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnAgregar.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnAgregar.FlatAppearance.BorderSize = 0;
+            this.btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAgregar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAgregar.Location = new System.Drawing.Point(830, 194);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(111, 27);
+            this.btnAgregar.TabIndex = 8;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = false;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // label3
             // 
@@ -153,14 +154,14 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Categoria";
             // 
-            // numericUpDown1
+            // NUCantidad
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(493, 195);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(77, 26);
-            this.numericUpDown1.TabIndex = 10;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.NUCantidad.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NUCantidad.Location = new System.Drawing.Point(493, 195);
+            this.NUCantidad.Name = "NUCantidad";
+            this.NUCantidad.Size = new System.Drawing.Size(77, 26);
+            this.NUCantidad.TabIndex = 10;
+            this.NUCantidad.ValueChanged += new System.EventHandler(this.NUCantidad_ValueChanged);
             // 
             // label4
             // 
@@ -201,9 +202,9 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbxHabitacion);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.NUCantidad);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.cmbxServicio);
             this.Controls.Add(this.cmbxTipoServicio);
             this.Controls.Add(this.label2);
@@ -215,7 +216,7 @@
             this.Size = new System.Drawing.Size(954, 652);
             this.Load += new System.EventHandler(this.UCServicios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUCantidad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,9 +231,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbxTipoServicio;
         private System.Windows.Forms.ComboBox cmbxServicio;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown NUCantidad;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbxHabitacion;
         private System.Windows.Forms.Label label5;

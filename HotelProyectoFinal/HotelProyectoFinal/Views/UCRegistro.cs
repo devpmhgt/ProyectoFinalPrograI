@@ -77,6 +77,7 @@ namespace HotelProyectoFinal.Views
 
         public void ActualizarDataGrid(List<DTOS.RegistroHuespedDTO> registros)
         {
+            dataGridView1.Rows.Clear();
             foreach (var registro in registros)
             {
                 int rowIndex = dataGridView1.Rows.Add();
@@ -163,6 +164,8 @@ namespace HotelProyectoFinal.Views
                     HUESPED Huesped = new HUESPED();
                     REGISTRO Registro = new REGISTRO();
                     ASIGNACION Asignacion = new ASIGNACION();
+                    TRANSACCION Transaccion = new TRANSACCION();
+                    TRANSACCION_DETALLE TransaccionDetalle = new TRANSACCION_DETALLE(); 
 
 
 
@@ -228,14 +231,34 @@ namespace HotelProyectoFinal.Views
 
                         }
 
+
+                        
+                        
+                        Transaccion.IdHabitacion = room.IdHabitacion;
+                        Transaccion.Total = room.Precio;
                         Registro.FechaReservaInicio = dateTimeInicio;
                         Registro.FechaReservaFinal = dateTimeFinal;  
                         Asignacion.IdHabitacion = room.IdHabitacion;
+                    
+                  
                     }
 
+
+                    Transaccion.IdRegistro = Registro.IdRegistro;
+                    Transaccion.IdTipoDoc = 2;
+                    Transaccion.Fecha = Registro.FechaHoraReserva;
+                    TransaccionDetalle.IdServicio = 8;
+                    TransaccionDetalle.IDTipoDoc = 2;
+                    TransaccionDetalle.Cantidad = 1;
+                    TransaccionDetalle.Total = Transaccion.Total;
+
                     Asignacion.IdRegistro = Registro.IdRegistro;
-                    Asignacion.IdHuesped = txtDPI.Text;
+                    Asignacion.IdHuesped = Transaccion.IdHuesped = TransaccionDetalle.IdHuesped = txtDPI.Text;
+                     
+                    
                     db.ASIGNACIONs.Add(Asignacion);
+                    db.TRANSACCIONs.Add(Transaccion);
+                    db.TRANSACCION_DETALLE.Add(TransaccionDetalle);
                     db.SaveChanges();
 
                 }
@@ -427,9 +450,18 @@ namespace HotelProyectoFinal.Views
             }
 
             Operaciones.CancelarReservacion(CancelarReservacion.IdRegistro);
+            ActualizarDataGrid(Operaciones.ObtenerHuespedesConReserva(txtDPI.Text));
+            buttonCancelar.Visible=false;
+            cmbxNivel.Text = "";
+            cmbxTipoHabitacion.Text = "";
 
             MessageBox.Show("La reserva fue cancelada exitosamente", "Cancelacion de Reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
         }
     }
