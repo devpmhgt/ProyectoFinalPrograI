@@ -27,6 +27,7 @@ namespace HotelProyectoFinal
             public string Nombre { get; set; }
             public string Apellido { get; set; }
 
+            public string IdHuesped { get; set; }
             public Nullable<System.DateTime> FechaReservacion { get; set; }
 
             public Nullable<System.DateTime> FechaReservaInicio { get; set; }

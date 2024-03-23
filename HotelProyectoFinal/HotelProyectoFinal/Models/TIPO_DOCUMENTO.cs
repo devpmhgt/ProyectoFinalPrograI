@@ -17,7 +17,7 @@ namespace HotelProyectoFinal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TIPO_DOCUMENTO()
         {
-            this.TRANSACCIONs = new HashSet<TRANSACCION>();
+            this.TRANSACCION_DETALLE = new HashSet<TRANSACCION_DETALLE>();
         }
     
         public int IdTipoDoc { get; set; }
@@ -25,6 +25,6 @@ namespace HotelProyectoFinal.Models
         public string Factor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TRANSACCION> TRANSACCIONs { get; set; }
+        public virtual ICollection<TRANSACCION_DETALLE> TRANSACCION_DETALLE { get; set; }
     }
 }

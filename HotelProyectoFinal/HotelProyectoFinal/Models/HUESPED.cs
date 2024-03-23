@@ -11,9 +11,7 @@ namespace HotelProyectoFinal.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class HUESPED
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,18 +21,8 @@ namespace HotelProyectoFinal.Models
         }
     
         public int Id { get; set; }
-
-        [DisplayName("DPI")]
-        [Required(ErrorMessage = "DPI es requerido")]
-        [StringLength(12, MinimumLength = 5, ErrorMessage = "DPI debe tener entre 5 y 12 caracteres")]
         public string DPI { get; set; }
-
-        [DisplayName("Nombres")]
-        [Required(ErrorMessage = "El campo de Nombres es requerido")]
         public string Nombres { get; set; }
-
-        [DisplayName("Apellidos")]
-        [Required(ErrorMessage = "El campo de Apellidos es requerido")]
         public string Apellidos { get; set; }
         public string Direccion { get; set; }
     

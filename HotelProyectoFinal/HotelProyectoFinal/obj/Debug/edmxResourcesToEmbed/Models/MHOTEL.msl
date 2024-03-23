@@ -121,19 +121,20 @@
     <EntitySetMapping Name="TRANSACCIONs">
       <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION">
         <MappingFragment StoreEntitySet="TRANSACCION">
+          <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
           <ScalarProperty Name="Total" ColumnName="Total" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="IdTipoDoc" ColumnName="IdTipoDoc" />
           <ScalarProperty Name="IdHabitacion" ColumnName="IdHabitacion" />
           <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
           <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
-          <ScalarProperty Name="Documento" ColumnName="Documento" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TRANSACCION_DETALLE">
       <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION_DETALLE">
         <MappingFragment StoreEntitySet="TRANSACCION_DETALLE">
+          <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
           <ScalarProperty Name="Total" ColumnName="Total" />
           <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
           <ScalarProperty Name="IDTipoDoc" ColumnName="IDTipoDoc" />

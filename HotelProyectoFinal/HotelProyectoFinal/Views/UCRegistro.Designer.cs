@@ -30,10 +30,20 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.IdRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nivel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Habitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FechaReservacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Del = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hasta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.INGRESO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SALIDA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CHECKIN = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.CHECKOUT = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.btnNuevoRegistro = new System.Windows.Forms.Button();
             this.lblSinRegistro = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -48,6 +58,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePickerFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.groupBoxDatosHuesped = new System.Windows.Forms.GroupBox();
+            this.buttonCancelar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnReservacion = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
@@ -59,17 +70,6 @@
             this.txtApellidos = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.Nombre = new System.Windows.Forms.Label();
-            this.IdRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nivel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Habitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaReservacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Del = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hasta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.INGRESO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SALIDA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CHECKIN = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.CHECKOUT = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.buttonCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,14 +82,14 @@
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.MediumSlateBlue;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IdRegistro,
@@ -103,33 +103,105 @@
             this.CHECKIN,
             this.CHECKOUT});
             this.dataGridView1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.RosyBrown;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.RosyBrown;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.MediumPurple;
             this.dataGridView1.Location = new System.Drawing.Point(22, 419);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.RosyBrown;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.RosyBrown;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(909, 185);
             this.dataGridView1.TabIndex = 31;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
+            // 
+            // IdRegistro
+            // 
+            this.IdRegistro.HeaderText = "ID";
+            this.IdRegistro.Name = "IdRegistro";
+            // 
+            // Nivel
+            // 
+            this.Nivel.HeaderText = "NIVEL";
+            this.Nivel.Name = "Nivel";
+            this.Nivel.Width = 200;
+            // 
+            // Habitacion
+            // 
+            this.Habitacion.HeaderText = "HABITACION";
+            this.Habitacion.Name = "Habitacion";
+            this.Habitacion.Width = 200;
+            // 
+            // FechaReservacion
+            // 
+            this.FechaReservacion.FillWeight = 200F;
+            this.FechaReservacion.HeaderText = "RESERVACION";
+            this.FechaReservacion.Name = "FechaReservacion";
+            this.FechaReservacion.Width = 200;
+            // 
+            // Del
+            // 
+            this.Del.HeaderText = "DEL";
+            this.Del.Name = "Del";
+            this.Del.Width = 200;
+            // 
+            // Hasta
+            // 
+            this.Hasta.HeaderText = "HASTA";
+            this.Hasta.Name = "Hasta";
+            this.Hasta.Width = 200;
+            // 
+            // INGRESO
+            // 
+            this.INGRESO.FillWeight = 200F;
+            this.INGRESO.HeaderText = "INGRESO";
+            this.INGRESO.Name = "INGRESO";
+            this.INGRESO.Width = 200;
+            // 
+            // SALIDA
+            // 
+            this.SALIDA.FillWeight = 200F;
+            this.SALIDA.HeaderText = "SALIDA";
+            this.SALIDA.Name = "SALIDA";
+            // 
+            // CHECKIN
+            // 
+            this.CHECKIN.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.CHECKIN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CHECKIN.HeaderText = "CHECKIN";
+            this.CHECKIN.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.CHECKIN.Name = "CHECKIN";
+            this.CHECKIN.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.CHECKIN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // CHECKOUT
+            // 
+            this.CHECKOUT.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.CHECKOUT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CHECKOUT.HeaderText = "CHECKOUT";
+            this.CHECKOUT.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.CHECKOUT.Name = "CHECKOUT";
+            this.CHECKOUT.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // btnNuevoRegistro
             // 
@@ -171,6 +243,7 @@
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Habitacion";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // cmbxTipoHabitacion
             // 
@@ -297,6 +370,21 @@
             this.groupBoxDatosHuesped.TabStop = false;
             this.groupBoxDatosHuesped.Text = "Datos Huesped";
             // 
+            // buttonCancelar
+            // 
+            this.buttonCancelar.BackColor = System.Drawing.Color.Crimson;
+            this.buttonCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonCancelar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCancelar.ForeColor = System.Drawing.Color.White;
+            this.buttonCancelar.Location = new System.Drawing.Point(273, 226);
+            this.buttonCancelar.Name = "buttonCancelar";
+            this.buttonCancelar.Size = new System.Drawing.Size(108, 28);
+            this.buttonCancelar.TabIndex = 44;
+            this.buttonCancelar.Text = "Cancelar";
+            this.buttonCancelar.UseVisualStyleBackColor = false;
+            this.buttonCancelar.Visible = false;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -415,93 +503,6 @@
             this.Nombre.Size = new System.Drawing.Size(71, 18);
             this.Nombre.TabIndex = 33;
             this.Nombre.Text = "Nombre";
-            // 
-            // IdRegistro
-            // 
-            this.IdRegistro.HeaderText = "ID";
-            this.IdRegistro.Name = "IdRegistro";
-            // 
-            // Nivel
-            // 
-            this.Nivel.HeaderText = "NIVEL";
-            this.Nivel.Name = "Nivel";
-            this.Nivel.Width = 200;
-            // 
-            // Habitacion
-            // 
-            this.Habitacion.HeaderText = "HABITACION";
-            this.Habitacion.Name = "Habitacion";
-            this.Habitacion.Width = 200;
-            // 
-            // FechaReservacion
-            // 
-            this.FechaReservacion.FillWeight = 200F;
-            this.FechaReservacion.HeaderText = "RESERVACION";
-            this.FechaReservacion.Name = "FechaReservacion";
-            this.FechaReservacion.Width = 200;
-            // 
-            // Del
-            // 
-            this.Del.HeaderText = "DEL";
-            this.Del.Name = "Del";
-            this.Del.Width = 200;
-            // 
-            // Hasta
-            // 
-            this.Hasta.HeaderText = "HASTA";
-            this.Hasta.Name = "Hasta";
-            this.Hasta.Width = 200;
-            // 
-            // INGRESO
-            // 
-            this.INGRESO.FillWeight = 200F;
-            this.INGRESO.HeaderText = "INGRESO";
-            this.INGRESO.Name = "INGRESO";
-            this.INGRESO.Width = 200;
-            // 
-            // SALIDA
-            // 
-            this.SALIDA.FillWeight = 200F;
-            this.SALIDA.HeaderText = "SALIDA";
-            this.SALIDA.Name = "SALIDA";
-            // 
-            // CHECKIN
-            // 
-            this.CHECKIN.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.CHECKIN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHECKIN.HeaderText = "CHECKIN";
-            this.CHECKIN.Items.AddRange(new object[] {
-            "Si",
-            "No"});
-            this.CHECKIN.Name = "CHECKIN";
-            this.CHECKIN.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.CHECKIN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // CHECKOUT
-            // 
-            this.CHECKOUT.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.CHECKOUT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHECKOUT.HeaderText = "CHECKOUT";
-            this.CHECKOUT.Items.AddRange(new object[] {
-            "Si",
-            "No"});
-            this.CHECKOUT.Name = "CHECKOUT";
-            this.CHECKOUT.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // buttonCancelar
-            // 
-            this.buttonCancelar.BackColor = System.Drawing.Color.Crimson;
-            this.buttonCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonCancelar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCancelar.ForeColor = System.Drawing.Color.White;
-            this.buttonCancelar.Location = new System.Drawing.Point(273, 226);
-            this.buttonCancelar.Name = "buttonCancelar";
-            this.buttonCancelar.Size = new System.Drawing.Size(108, 28);
-            this.buttonCancelar.TabIndex = 44;
-            this.buttonCancelar.Text = "Cancelar";
-            this.buttonCancelar.UseVisualStyleBackColor = false;
-            this.buttonCancelar.Visible = false;
-            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
             // 
             // UCRegistro
             // 
