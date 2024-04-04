@@ -4,27 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0e581ac254ef49ef8b4f1cf18e04e35b" Name="Diagram1">
-        <EntityTypeShape EntityType="DBHOTELModel.ASIGNACION" Width="1.5" PointX="5.25" PointY="10.375" />
-        <EntityTypeShape EntityType="DBHOTELModel.HABITACION" Width="1.5" PointX="3" PointY="12.125" />
-        <EntityTypeShape EntityType="DBHOTELModel.HUESPED" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="DBHOTELModel.REGISTRO" Width="1.5" PointX="3" PointY="8.25" />
-        <EntityTypeShape EntityType="DBHOTELModel.SERVICIO" Width="1.5" PointX="3" PointY="1.25" />
-        <EntityTypeShape EntityType="DBHOTELModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DBHOTELModel.TIPO" Width="1.5" PointX="0.75" PointY="12.625" />
-        <EntityTypeShape EntityType="DBHOTELModel.TIPO_DOCUMENTO" Width="1.5" PointX="3" PointY="5.5" />
-        <EntityTypeShape EntityType="DBHOTELModel.TipoServicio" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="DBHOTELModel.TRANSACCION" Width="1.5" PointX="7.5" PointY="1" />
-        <EntityTypeShape EntityType="DBHOTELModel.TRANSACCION_DETALLE" Width="1.5" PointX="5.25" PointY="1" />
+      <Diagram DiagramId="664f0bbd314e447087b144bcfbdc4acd" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="DBHOTELModel.ASIGNACION" Width="1.5" PointX="5.25" PointY="1.375" />
+        <EntityTypeShape EntityType="DBHOTELModel.HABITACION" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="DBHOTELModel.HUESPED" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="DBHOTELModel.SERVICIO" Width="1.5" PointX="7.5" PointY="5.375" />
+        <EntityTypeShape EntityType="DBHOTELModel.sysdiagram" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DBHOTELModel.TIPO" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="DBHOTELModel.TIPO_DOCUMENTO" Width="1.5" PointX="7.5" PointY="8.25" />
+        <EntityTypeShape EntityType="DBHOTELModel.TipoServicio" Width="1.5" PointX="5.25" PointY="5.625" />
+        <EntityTypeShape EntityType="DBHOTELModel.TRANSACCION_DETALLE" Width="1.5" PointX="9.75" PointY="1" />
         <AssociationConnector Association="DBHOTELModel.FK_ASIGNACION_HABITACION" />
-        <AssociationConnector Association="DBHOTELModel.FK_ASIGNACION_REGISTRO" />
-        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_ASIGNACION" />
         <AssociationConnector Association="DBHOTELModel.FK_HABITACION_TIPO" />
-        <AssociationConnector Association="DBHOTELModel.FK_REGISTRO_HUESPED" />
         <AssociationConnector Association="DBHOTELModel.FK_SERVICIO_TipoServicio" />
         <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO" />
         <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO" />
-        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE" />
+        <EntityTypeShape EntityType="DBHOTELModel.TRANSACCION" Width="1.5" PointX="7.5" PointY="1" />
+        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_ASIGNACION" />
+        <AssociationConnector Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" />
+        <EntityTypeShape EntityType="DBHOTELModel.FACTURA" Width="1.5" PointX="10.375" PointY="5.25" />
+        <EntityTypeShape EntityType="DBHOTELModel.REGISTRO" Width="1.5" PointX="3" PointY="4.875" />
+        <AssociationConnector Association="DBHOTELModel.FK_ASIGNACION_REGISTRO" />
+        <AssociationConnector Association="DBHOTELModel.FK_REGISTRO_HUESPED" />
+        <EntityTypeShape EntityType="DBHOTELModel.FACTURA_DETALLE" Width="1.5" PointX="12.625" PointY="5" />
+        <AssociationConnector Association="DBHOTELModel.FK_FACTURA_DETALLE_FACTURA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

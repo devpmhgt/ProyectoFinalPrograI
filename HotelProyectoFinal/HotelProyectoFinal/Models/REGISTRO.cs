@@ -19,7 +19,7 @@ namespace HotelProyectoFinal.Models
         public Nullable<System.DateTime> FechaHoraReserva { get; set; }
         public Nullable<System.DateTime> FechaHoraIngreso { get; set; }
         public Nullable<System.DateTime> FechaHoraFinRegistro { get; set; }
-        public string TotalPago { get; set; }
+        public Nullable<decimal> TotalPago { get; set; }
         public string ReservaActiva { get; set; }
         public Nullable<System.DateTime> FechaReservaInicio { get; set; }
         public Nullable<System.DateTime> FechaReservaFinal { get; set; }

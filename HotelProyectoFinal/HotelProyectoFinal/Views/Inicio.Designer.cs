@@ -59,7 +59,6 @@
             this.PanelVistas.Name = "PanelVistas";
             this.PanelVistas.Size = new System.Drawing.Size(954, 652);
             this.PanelVistas.TabIndex = 2;
-            this.PanelVistas.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel1
             // 
@@ -210,6 +209,7 @@
             this.Controls.Add(this.PanelVistas);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Inicio";
             this.Text = "Hotel ";
             this.Load += new System.EventHandler(this.Inicio_Load);

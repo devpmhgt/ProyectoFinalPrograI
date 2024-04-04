@@ -13,6 +13,30 @@
           <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdHabitacion" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FACTURA">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaEmision" Type="datetime" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="50" />
+          <Property Name="NIT" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FACTURA_DETALLE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFactura" Type="int" Nullable="false" />
+          <Property Name="IdTransaccion" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="HABITACION">
           <Key>
             <PropertyRef Name="IdHabitacion" />
@@ -43,7 +67,7 @@
           <Property Name="FechaHoraReserva" Type="datetime" />
           <Property Name="FechaHoraIngreso" Type="datetime" />
           <Property Name="FechaHoraFinRegistro" Type="datetime" />
-          <Property Name="TotalPago" Type="varchar" MaxLength="50" />
+          <Property Name="TotalPago" Type="decimal" Precision="10" Scale="2" />
           <Property Name="ReservaActiva" Type="nchar" MaxLength="1" />
           <Property Name="FechaReservaInicio" Type="datetime" />
           <Property Name="FechaReservaFinal" Type="datetime" />
@@ -82,7 +106,7 @@
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
           <Property Name="Factor" Type="nchar" MaxLength="1" />
         </EntityType>
-        <EntityType Name="TipoServicio">
+        <EntityType Name="TipoServicios">
           <Key>
             <PropertyRef Name="IdTipoServicio" />
           </Key>
@@ -100,17 +124,19 @@
           <Property Name="Fecha" Type="datetime" />
           <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
           <Property Name="IdTransaccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pagado" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="TRANSACCION_DETALLE">
           <Key>
-            <PropertyRef Name="IdHuesped" />
+            <PropertyRef Name="IdTransaccionDetalle" />
           </Key>
-          <Property Name="Documento" Type="int" Nullable="false" />
           <Property Name="IdServicio" Type="int" Nullable="false" />
           <Property Name="IDTipoDoc" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="int" />
           <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
           <Property Name="IdHuesped" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdTransaccionDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTransaccion" Type="int" />
         </EntityType>
         <Association Name="FK_ASIGNACION_HABITACION">
           <End Role="HABITACION" Type="Self.HABITACION" Multiplicity="1" />
@@ -133,6 +159,18 @@
             </Principal>
             <Dependent Role="ASIGNACION">
               <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA_DETALLE_FACTURA">
+          <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="1" />
+          <End Role="FACTURA_DETALLE" Type="Self.FACTURA_DETALLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACTURA">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="FACTURA_DETALLE">
+              <PropertyRef Name="IdFactura" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -161,10 +199,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SERVICIO_TipoServicio">
-          <End Role="TipoServicio" Type="Self.TipoServicio" Multiplicity="0..1" />
+          <End Role="TipoServicios" Type="Self.TipoServicios" Multiplicity="0..1" />
           <End Role="SERVICIO" Type="Self.SERVICIO" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TipoServicio">
+            <Principal Role="TipoServicios">
               <PropertyRef Name="IdTipoServicio" />
             </Principal>
             <Dependent Role="SERVICIO">
@@ -208,15 +246,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TRANSACCION_TRANSACCION_DETALLE">
-          <End Role="TRANSACCION_DETALLE" Type="Self.TRANSACCION_DETALLE" Multiplicity="1" />
-          <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="*" />
+        <Association Name="FK_TRANSACCION_DETALLE_TRANSACCION">
+          <End Role="TRANSACCION" Type="Self.TRANSACCION" Multiplicity="0..1" />
+          <End Role="TRANSACCION_DETALLE" Type="Self.TRANSACCION_DETALLE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRANSACCION_DETALLE">
-              <PropertyRef Name="IdHuesped" />
+            <Principal Role="TRANSACCION">
+              <PropertyRef Name="IdTransaccion" />
             </Principal>
-            <Dependent Role="TRANSACCION">
-              <PropertyRef Name="IdHuesped" />
+            <Dependent Role="TRANSACCION_DETALLE">
+              <PropertyRef Name="IdTransaccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -253,6 +291,8 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="DBHOTELModelStoreContainer">
           <EntitySet Name="ASIGNACION" EntityType="Self.ASIGNACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACTURA" EntityType="Self.FACTURA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACTURA_DETALLE" EntityType="Self.FACTURA_DETALLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HABITACION" EntityType="Self.HABITACION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HUESPED" EntityType="Self.HUESPED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REGISTRO" EntityType="Self.REGISTRO" Schema="dbo" store:Type="Tables" />
@@ -260,7 +300,7 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO" EntityType="Self.TIPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TipoServicio" EntityType="Self.TipoServicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoServicios" EntityType="Self.TipoServicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANSACCION" EntityType="Self.TRANSACCION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANSACCION_DETALLE" EntityType="Self.TRANSACCION_DETALLE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="Self.FK_ASIGNACION_HABITACION">
@@ -271,6 +311,10 @@
             <End Role="REGISTRO" EntitySet="REGISTRO" />
             <End Role="ASIGNACION" EntitySet="ASIGNACION" />
           </AssociationSet>
+          <AssociationSet Name="FK_FACTURA_DETALLE_FACTURA" Association="Self.FK_FACTURA_DETALLE_FACTURA">
+            <End Role="FACTURA" EntitySet="FACTURA" />
+            <End Role="FACTURA_DETALLE" EntitySet="FACTURA_DETALLE" />
+          </AssociationSet>
           <AssociationSet Name="FK_HABITACION_TIPO" Association="Self.FK_HABITACION_TIPO">
             <End Role="TIPO" EntitySet="TIPO" />
             <End Role="HABITACION" EntitySet="HABITACION" />
@@ -280,7 +324,7 @@
             <End Role="REGISTRO" EntitySet="REGISTRO" />
           </AssociationSet>
           <AssociationSet Name="FK_SERVICIO_TipoServicio" Association="Self.FK_SERVICIO_TipoServicio">
-            <End Role="TipoServicio" EntitySet="TipoServicio" />
+            <End Role="TipoServicios" EntitySet="TipoServicios" />
             <End Role="SERVICIO" EntitySet="SERVICIO" />
           </AssociationSet>
           <AssociationSet Name="FK_TRANSACCION_ASIGNACION" Association="Self.FK_TRANSACCION_ASIGNACION">
@@ -295,9 +339,9 @@
             <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
             <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
           </AssociationSet>
-          <AssociationSet Name="FK_TRANSACCION_TRANSACCION_DETALLE" Association="Self.FK_TRANSACCION_TRANSACCION_DETALLE">
-            <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+          <AssociationSet Name="FK_TRANSACCION_DETALLE_TRANSACCION" Association="Self.FK_TRANSACCION_DETALLE_TRANSACCION">
             <End Role="TRANSACCION" EntitySet="TRANSACCION" />
+            <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -338,33 +382,19 @@
           <EntitySet Name="ASIGNACIONs" EntityType="DBHOTELModel.ASIGNACION" />
           <EntitySet Name="HABITACIONs" EntityType="DBHOTELModel.HABITACION" />
           <EntitySet Name="HUESPEDs" EntityType="DBHOTELModel.HUESPED" />
-          <EntitySet Name="REGISTROes" EntityType="DBHOTELModel.REGISTRO" />
           <EntitySet Name="SERVICIOs" EntityType="DBHOTELModel.SERVICIO" />
           <EntitySet Name="sysdiagrams" EntityType="DBHOTELModel.sysdiagram" />
           <EntitySet Name="TIPOes" EntityType="DBHOTELModel.TIPO" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="DBHOTELModel.TIPO_DOCUMENTO" />
           <EntitySet Name="TipoServicios" EntityType="DBHOTELModel.TipoServicio" />
-          <EntitySet Name="TRANSACCIONs" EntityType="DBHOTELModel.TRANSACCION" />
           <EntitySet Name="TRANSACCION_DETALLE" EntityType="DBHOTELModel.TRANSACCION_DETALLE" />
           <AssociationSet Name="FK_ASIGNACION_HABITACION" Association="DBHOTELModel.FK_ASIGNACION_HABITACION">
             <End Role="HABITACION" EntitySet="HABITACIONs" />
             <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
           </AssociationSet>
-          <AssociationSet Name="FK_ASIGNACION_REGISTRO" Association="DBHOTELModel.FK_ASIGNACION_REGISTRO">
-            <End Role="REGISTRO" EntitySet="REGISTROes" />
-            <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TRANSACCION_ASIGNACION" Association="DBHOTELModel.FK_TRANSACCION_ASIGNACION">
-            <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
-            <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
-          </AssociationSet>
           <AssociationSet Name="FK_HABITACION_TIPO" Association="DBHOTELModel.FK_HABITACION_TIPO">
             <End Role="TIPO" EntitySet="TIPOes" />
             <End Role="HABITACION" EntitySet="HABITACIONs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_REGISTRO_HUESPED" Association="DBHOTELModel.FK_REGISTRO_HUESPED">
-            <End Role="HUESPED" EntitySet="HUESPEDs" />
-            <End Role="REGISTRO" EntitySet="REGISTROes" />
           </AssociationSet>
           <AssociationSet Name="FK_SERVICIO_TipoServicio" Association="DBHOTELModel.FK_SERVICIO_TipoServicio">
             <End Role="TipoServicio" EntitySet="TipoServicios" />
@@ -378,11 +408,31 @@
             <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
             <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
           </AssociationSet>
-          <AssociationSet Name="FK_TRANSACCION_TRANSACCION_DETALLE" Association="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE">
-            <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+          <EntitySet Name="TRANSACCIONs" EntityType="DBHOTELModel.TRANSACCION" />
+          <AssociationSet Name="FK_TRANSACCION_ASIGNACION" Association="DBHOTELModel.FK_TRANSACCION_ASIGNACION">
+            <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
             <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
           </AssociationSet>
-          </EntityContainer>
+          <AssociationSet Name="FK_TRANSACCION_DETALLE_TRANSACCION" Association="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION">
+            <End Role="TRANSACCION" EntitySet="TRANSACCIONs" />
+            <End Role="TRANSACCION_DETALLE" EntitySet="TRANSACCION_DETALLE" />
+          </AssociationSet>
+          <EntitySet Name="FACTURAs" EntityType="DBHOTELModel.FACTURA" />
+          <EntitySet Name="REGISTROes" EntityType="DBHOTELModel.REGISTRO" />
+          <AssociationSet Name="FK_ASIGNACION_REGISTRO" Association="DBHOTELModel.FK_ASIGNACION_REGISTRO">
+            <End Role="REGISTRO" EntitySet="REGISTROes" />
+            <End Role="ASIGNACION" EntitySet="ASIGNACIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRO_HUESPED" Association="DBHOTELModel.FK_REGISTRO_HUESPED">
+            <End Role="HUESPED" EntitySet="HUESPEDs" />
+            <End Role="REGISTRO" EntitySet="REGISTROes" />
+          </AssociationSet>
+          <EntitySet Name="FACTURA_DETALLE" EntityType="DBHOTELModel.FACTURA_DETALLE" />
+          <AssociationSet Name="FK_FACTURA_DETALLE_FACTURA" Association="DBHOTELModel.FK_FACTURA_DETALLE_FACTURA">
+            <End Role="FACTURA" EntitySet="FACTURAs" />
+            <End Role="FACTURA_DETALLE" EntitySet="FACTURA_DETALLE" />
+          </AssociationSet>
+        </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -402,8 +452,8 @@
           <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdHabitacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="HABITACION" Relationship="DBHOTELModel.FK_ASIGNACION_HABITACION" FromRole="ASIGNACION" ToRole="HABITACION" />
-          <NavigationProperty Name="REGISTRO" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="ASIGNACION" ToRole="REGISTRO" />
           <NavigationProperty Name="TRANSACCIONs" Relationship="DBHOTELModel.FK_TRANSACCION_ASIGNACION" FromRole="ASIGNACION" ToRole="TRANSACCION" />
+          <NavigationProperty Name="REGISTRO" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="ASIGNACION" ToRole="REGISTRO" />
         </EntityType>
         <EntityType Name="HABITACION">
           <Key>
@@ -428,22 +478,6 @@
           <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="REGISTROes" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="HUESPED" ToRole="REGISTRO" />
-        </EntityType>
-        <EntityType Name="REGISTRO">
-          <Key>
-            <PropertyRef Name="IdRegistro" />
-          </Key>
-          <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FechaHoraReserva" Type="DateTime" Precision="3" />
-          <Property Name="FechaHoraIngreso" Type="DateTime" Precision="3" />
-          <Property Name="FechaHoraFinRegistro" Type="DateTime" Precision="3" />
-          <Property Name="TotalPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ReservaActiva" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="FechaReservaInicio" Type="DateTime" Precision="3" />
-          <Property Name="FechaReservaFinal" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="REGISTRO" ToRole="ASIGNACION" />
-          <NavigationProperty Name="HUESPED" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="REGISTRO" ToRole="HUESPED" />
         </EntityType>
         <EntityType Name="SERVICIO">
           <Key>
@@ -491,33 +525,20 @@
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SERVICIOs" Relationship="DBHOTELModel.FK_SERVICIO_TipoServicio" FromRole="TipoServicio" ToRole="SERVICIO" />
         </EntityType>
-        <EntityType Name="TRANSACCION">
-          <Key>
-            <PropertyRef Name="IdTransaccion" />
-          </Key>
-          <Property Name="IdRegistro" Type="Int32" Nullable="false" />
-          <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdHabitacion" Type="Int32" />
-          <Property Name="IdTipoDoc" Type="Int32" />
-          <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="IdTransaccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_TRANSACCION_ASIGNACION" FromRole="TRANSACCION" ToRole="ASIGNACION" />
-          <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE" FromRole="TRANSACCION" ToRole="TRANSACCION_DETALLE" />
-        </EntityType>
         <EntityType Name="TRANSACCION_DETALLE">
           <Key>
-            <PropertyRef Name="IdHuesped" />
+            <PropertyRef Name="IdTransaccionDetalle" />
           </Key>
-          <Property Name="Documento" Type="Int32" Nullable="false" />
           <Property Name="IdServicio" Type="Int32" Nullable="false" />
           <Property Name="IDTipoDoc" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" />
           <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdTransaccionDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTransaccion" Type="Int32" />
           <NavigationProperty Name="SERVICIO" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_SERVICIO" FromRole="TRANSACCION_DETALLE" ToRole="SERVICIO" />
           <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TIPO_DOCUMENTO" FromRole="TRANSACCION_DETALLE" ToRole="TIPO_DOCUMENTO" />
-          <NavigationProperty Name="TRANSACCIONs" Relationship="DBHOTELModel.FK_TRANSACCION_TRANSACCION_DETALLE" FromRole="TRANSACCION_DETALLE" ToRole="TRANSACCION" />
+          <NavigationProperty Name="TRANSACCION" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" FromRole="TRANSACCION_DETALLE" ToRole="TRANSACCION" />
         </EntityType>
         <Association Name="FK_ASIGNACION_HABITACION">
           <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="1" />
@@ -531,30 +552,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ASIGNACION_REGISTRO">
-          <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="1" />
-          <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="REGISTRO">
-              <PropertyRef Name="IdRegistro" />
-            </Principal>
-            <Dependent Role="ASIGNACION">
-              <PropertyRef Name="IdRegistro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TRANSACCION_ASIGNACION">
-          <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="1" />
-          <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASIGNACION">
-              <PropertyRef Name="IdRegistro" />
-            </Principal>
-            <Dependent Role="TRANSACCION">
-              <PropertyRef Name="IdRegistro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_HABITACION_TIPO">
           <End Type="DBHOTELModel.TIPO" Role="TIPO" Multiplicity="1" />
           <End Type="DBHOTELModel.HABITACION" Role="HABITACION" Multiplicity="*" />
@@ -564,18 +561,6 @@
             </Principal>
             <Dependent Role="HABITACION">
               <PropertyRef Name="IdTipo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_REGISTRO_HUESPED">
-          <End Type="DBHOTELModel.HUESPED" Role="HUESPED" Multiplicity="1" />
-          <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HUESPED">
-              <PropertyRef Name="DPI" />
-            </Principal>
-            <Dependent Role="REGISTRO">
-              <PropertyRef Name="IdHuesped" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -615,19 +600,124 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TRANSACCION_TRANSACCION_DETALLE">
-          <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="1" />
+        <EntityType Name="TRANSACCION">
+          <Key>
+            <PropertyRef Name="IdTransaccion" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+          <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdHabitacion" Type="Int32" />
+          <Property Name="IdTipoDoc" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="IdTransaccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pagado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_TRANSACCION_ASIGNACION" FromRole="TRANSACCION" ToRole="ASIGNACION" />
+          <NavigationProperty Name="TRANSACCION_DETALLE" Relationship="DBHOTELModel.FK_TRANSACCION_DETALLE_TRANSACCION" FromRole="TRANSACCION" ToRole="TRANSACCION_DETALLE" />
+        </EntityType>
+        <Association Name="FK_TRANSACCION_ASIGNACION">
+          <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="1" />
           <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRANSACCION_DETALLE">
-              <PropertyRef Name="IdHuesped" />
+            <Principal Role="ASIGNACION">
+              <PropertyRef Name="IdRegistro" />
             </Principal>
             <Dependent Role="TRANSACCION">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACCION_DETALLE_TRANSACCION">
+          <End Type="DBHOTELModel.TRANSACCION" Role="TRANSACCION" Multiplicity="0..1" />
+          <End Type="DBHOTELModel.TRANSACCION_DETALLE" Role="TRANSACCION_DETALLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACCION">
+              <PropertyRef Name="IdTransaccion" />
+            </Principal>
+            <Dependent Role="TRANSACCION_DETALLE">
+              <PropertyRef Name="IdTransaccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FACTURA">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaEmision" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FACTURA_DETALLE" Relationship="DBHOTELModel.FK_FACTURA_DETALLE_FACTURA" FromRole="FACTURA" ToRole="FACTURA_DETALLE" />
+        </EntityType>
+        <EntityType Name="REGISTRO">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdHuesped" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaHoraReserva" Type="DateTime" Precision="3" />
+          <Property Name="FechaHoraIngreso" Type="DateTime" Precision="3" />
+          <Property Name="FechaHoraFinRegistro" Type="DateTime" Precision="3" />
+          <Property Name="TotalPago" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ReservaActiva" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="FechaReservaInicio" Type="DateTime" Precision="3" />
+          <Property Name="FechaReservaFinal" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ASIGNACION" Relationship="DBHOTELModel.FK_ASIGNACION_REGISTRO" FromRole="REGISTRO" ToRole="ASIGNACION" />
+          <NavigationProperty Name="HUESPED" Relationship="DBHOTELModel.FK_REGISTRO_HUESPED" FromRole="REGISTRO" ToRole="HUESPED" />
+        </EntityType>
+        <Association Name="FK_ASIGNACION_REGISTRO">
+          <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="1" />
+          <End Type="DBHOTELModel.ASIGNACION" Role="ASIGNACION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="REGISTRO">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="ASIGNACION">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRO_HUESPED">
+          <End Type="DBHOTELModel.HUESPED" Role="HUESPED" Multiplicity="1" />
+          <End Type="DBHOTELModel.REGISTRO" Role="REGISTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HUESPED">
+              <PropertyRef Name="DPI" />
+            </Principal>
+            <Dependent Role="REGISTRO">
               <PropertyRef Name="IdHuesped" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityType Name="FACTURA_DETALLE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFactura" Type="Int32" Nullable="false" />
+          <Property Name="IdTransaccion" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FACTURA" Relationship="DBHOTELModel.FK_FACTURA_DETALLE_FACTURA" FromRole="FACTURA_DETALLE" ToRole="FACTURA" />
+        </EntityType>
+        <Association Name="FK_FACTURA_DETALLE_FACTURA">
+          <End Type="DBHOTELModel.FACTURA" Role="FACTURA" Multiplicity="1" />
+          <End Type="DBHOTELModel.FACTURA_DETALLE" Role="FACTURA_DETALLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACTURA">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="FACTURA_DETALLE">
+              <PropertyRef Name="IdFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -689,21 +779,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="REGISTROes">
-            <EntityTypeMapping TypeName="DBHOTELModel.REGISTRO">
-              <MappingFragment StoreEntitySet="REGISTRO">
-                <ScalarProperty Name="FechaReservaFinal" ColumnName="FechaReservaFinal" />
-                <ScalarProperty Name="FechaReservaInicio" ColumnName="FechaReservaInicio" />
-                <ScalarProperty Name="ReservaActiva" ColumnName="ReservaActiva" />
-                <ScalarProperty Name="TotalPago" ColumnName="TotalPago" />
-                <ScalarProperty Name="FechaHoraFinRegistro" ColumnName="FechaHoraFinRegistro" />
-                <ScalarProperty Name="FechaHoraIngreso" ColumnName="FechaHoraIngreso" />
-                <ScalarProperty Name="FechaHoraReserva" ColumnName="FechaHoraReserva" />
-                <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
-                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SERVICIOs">
             <EntityTypeMapping TypeName="DBHOTELModel.SERVICIO">
               <MappingFragment StoreEntitySet="SERVICIO">
@@ -744,15 +819,29 @@
           </EntitySetMapping>
           <EntitySetMapping Name="TipoServicios">
             <EntityTypeMapping TypeName="DBHOTELModel.TipoServicio">
-              <MappingFragment StoreEntitySet="TipoServicio">
+              <MappingFragment StoreEntitySet="TipoServicios">
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdTipoServicio" ColumnName="IdTipoServicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACCION_DETALLE">
+            <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION_DETALLE">
+              <MappingFragment StoreEntitySet="TRANSACCION_DETALLE">
+                <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
+                <ScalarProperty Name="IdTransaccionDetalle" ColumnName="IdTransaccionDetalle" />
+                <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IDTipoDoc" ColumnName="IDTipoDoc" />
+                <ScalarProperty Name="IdServicio" ColumnName="IdServicio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRANSACCIONs">
             <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION">
               <MappingFragment StoreEntitySet="TRANSACCION">
+                <ScalarProperty Name="Pagado" ColumnName="Pagado" />
                 <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
@@ -763,19 +852,48 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TRANSACCION_DETALLE">
-            <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION_DETALLE">
-              <MappingFragment StoreEntitySet="TRANSACCION_DETALLE">
+          <EntitySetMapping Name="FACTURAs">
+            <EntityTypeMapping TypeName="DBHOTELModel.FACTURA">
+              <MappingFragment StoreEntitySet="FACTURA">
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
                 <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="IDTipoDoc" ColumnName="IDTipoDoc" />
-                <ScalarProperty Name="IdServicio" ColumnName="IdServicio" />
-                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="REGISTROes">
+            <EntityTypeMapping TypeName="DBHOTELModel.REGISTRO">
+              <MappingFragment StoreEntitySet="REGISTRO">
+                <ScalarProperty Name="FechaReservaFinal" ColumnName="FechaReservaFinal" />
+                <ScalarProperty Name="FechaReservaInicio" ColumnName="FechaReservaInicio" />
+                <ScalarProperty Name="ReservaActiva" ColumnName="ReservaActiva" />
+                <ScalarProperty Name="TotalPago" ColumnName="TotalPago" />
+                <ScalarProperty Name="FechaHoraFinRegistro" ColumnName="FechaHoraFinRegistro" />
+                <ScalarProperty Name="FechaHoraIngreso" ColumnName="FechaHoraIngreso" />
+                <ScalarProperty Name="FechaHoraReserva" ColumnName="FechaHoraReserva" />
+                <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACTURA_DETALLE">
+            <EntityTypeMapping TypeName="DBHOTELModel.FACTURA_DETALLE">
+              <MappingFragment StoreEntitySet="FACTURA_DETALLE">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -57,21 +57,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="REGISTROes">
-      <EntityTypeMapping TypeName="DBHOTELModel.REGISTRO">
-        <MappingFragment StoreEntitySet="REGISTRO">
-          <ScalarProperty Name="FechaReservaFinal" ColumnName="FechaReservaFinal" />
-          <ScalarProperty Name="FechaReservaInicio" ColumnName="FechaReservaInicio" />
-          <ScalarProperty Name="ReservaActiva" ColumnName="ReservaActiva" />
-          <ScalarProperty Name="TotalPago" ColumnName="TotalPago" />
-          <ScalarProperty Name="FechaHoraFinRegistro" ColumnName="FechaHoraFinRegistro" />
-          <ScalarProperty Name="FechaHoraIngreso" ColumnName="FechaHoraIngreso" />
-          <ScalarProperty Name="FechaHoraReserva" ColumnName="FechaHoraReserva" />
-          <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
-          <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="SERVICIOs">
       <EntityTypeMapping TypeName="DBHOTELModel.SERVICIO">
         <MappingFragment StoreEntitySet="SERVICIO">
@@ -112,15 +97,29 @@
     </EntitySetMapping>
     <EntitySetMapping Name="TipoServicios">
       <EntityTypeMapping TypeName="DBHOTELModel.TipoServicio">
-        <MappingFragment StoreEntitySet="TipoServicio">
+        <MappingFragment StoreEntitySet="TipoServicios">
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="IdTipoServicio" ColumnName="IdTipoServicio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRANSACCION_DETALLE">
+      <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION_DETALLE">
+        <MappingFragment StoreEntitySet="TRANSACCION_DETALLE">
+          <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
+          <ScalarProperty Name="IdTransaccionDetalle" ColumnName="IdTransaccionDetalle" />
+          <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="IDTipoDoc" ColumnName="IDTipoDoc" />
+          <ScalarProperty Name="IdServicio" ColumnName="IdServicio" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TRANSACCIONs">
       <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION">
         <MappingFragment StoreEntitySet="TRANSACCION">
+          <ScalarProperty Name="Pagado" ColumnName="Pagado" />
           <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
           <ScalarProperty Name="Total" ColumnName="Total" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
@@ -131,15 +130,44 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TRANSACCION_DETALLE">
-      <EntityTypeMapping TypeName="DBHOTELModel.TRANSACCION_DETALLE">
-        <MappingFragment StoreEntitySet="TRANSACCION_DETALLE">
+    <EntitySetMapping Name="FACTURAs">
+      <EntityTypeMapping TypeName="DBHOTELModel.FACTURA">
+        <MappingFragment StoreEntitySet="FACTURA">
+          <ScalarProperty Name="NIT" ColumnName="NIT" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
           <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
+          <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REGISTROes">
+      <EntityTypeMapping TypeName="DBHOTELModel.REGISTRO">
+        <MappingFragment StoreEntitySet="REGISTRO">
+          <ScalarProperty Name="FechaReservaFinal" ColumnName="FechaReservaFinal" />
+          <ScalarProperty Name="FechaReservaInicio" ColumnName="FechaReservaInicio" />
+          <ScalarProperty Name="ReservaActiva" ColumnName="ReservaActiva" />
+          <ScalarProperty Name="TotalPago" ColumnName="TotalPago" />
+          <ScalarProperty Name="FechaHoraFinRegistro" ColumnName="FechaHoraFinRegistro" />
+          <ScalarProperty Name="FechaHoraIngreso" ColumnName="FechaHoraIngreso" />
+          <ScalarProperty Name="FechaHoraReserva" ColumnName="FechaHoraReserva" />
+          <ScalarProperty Name="IdHuesped" ColumnName="IdHuesped" />
+          <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FACTURA_DETALLE">
+      <EntityTypeMapping TypeName="DBHOTELModel.FACTURA_DETALLE">
+        <MappingFragment StoreEntitySet="FACTURA_DETALLE">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
           <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-          <ScalarProperty Name="IDTipoDoc" ColumnName="IDTipoDoc" />
-          <ScalarProperty Name="IdServicio" ColumnName="IdServicio" />
-          <ScalarProperty Name="Documento" ColumnName="Documento" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdTransaccion" ColumnName="IdTransaccion" />
+          <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

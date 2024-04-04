@@ -25,8 +25,8 @@ namespace HotelProyectoFinal.Models
         public int IdHabitacion { get; set; }
     
         public virtual HABITACION HABITACION { get; set; }
-        public virtual REGISTRO REGISTRO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRANSACCION> TRANSACCIONs { get; set; }
+        public virtual REGISTRO REGISTRO { get; set; }
     }
 }

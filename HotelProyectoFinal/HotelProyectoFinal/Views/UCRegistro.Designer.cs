@@ -35,8 +35,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.IdRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hbtcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nivel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Habitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FechaReservacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Del = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hasta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +47,7 @@
             this.btnNuevoRegistro = new System.Windows.Forms.Button();
             this.lblSinRegistro = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.cmbxTipoHabitacion = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -70,10 +71,13 @@
             this.txtApellidos = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.Nombre = new System.Windows.Forms.Label();
+            this.grpBoxDisponibilida = new System.Windows.Forms.GroupBox();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBoxDatosHuesped.SuspendLayout();
+            this.grpBoxDisponibilida.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -93,8 +97,8 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IdRegistro,
+            this.Hbtcion,
             this.Nivel,
-            this.Habitacion,
             this.FechaReservacion,
             this.Del,
             this.Hasta,
@@ -113,7 +117,7 @@
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.MediumPurple;
-            this.dataGridView1.Location = new System.Drawing.Point(22, 419);
+            this.dataGridView1.Location = new System.Drawing.Point(24, 439);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -126,7 +130,7 @@
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(909, 185);
+            this.dataGridView1.Size = new System.Drawing.Size(893, 185);
             this.dataGridView1.TabIndex = 31;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
@@ -136,17 +140,16 @@
             this.IdRegistro.HeaderText = "ID";
             this.IdRegistro.Name = "IdRegistro";
             // 
+            // Hbtcion
+            // 
+            this.Hbtcion.HeaderText = "HABITACION";
+            this.Hbtcion.Name = "Hbtcion";
+            // 
             // Nivel
             // 
             this.Nivel.HeaderText = "NIVEL";
             this.Nivel.Name = "Nivel";
             this.Nivel.Width = 200;
-            // 
-            // Habitacion
-            // 
-            this.Habitacion.HeaderText = "HABITACION";
-            this.Habitacion.Name = "Habitacion";
-            this.Habitacion.Width = 200;
             // 
             // FechaReservacion
             // 
@@ -186,8 +189,7 @@
             this.CHECKIN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHECKIN.HeaderText = "CHECKIN";
             this.CHECKIN.Items.AddRange(new object[] {
-            "Si",
-            "No"});
+            "Si"});
             this.CHECKIN.Name = "CHECKIN";
             this.CHECKIN.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.CHECKIN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -198,8 +200,7 @@
             this.CHECKOUT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHECKOUT.HeaderText = "CHECKOUT";
             this.CHECKOUT.Items.AddRange(new object[] {
-            "Si",
-            "No"});
+            "Si"});
             this.CHECKOUT.Name = "CHECKOUT";
             this.CHECKOUT.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
@@ -222,7 +223,7 @@
             this.lblSinRegistro.AutoSize = true;
             this.lblSinRegistro.Font = new System.Drawing.Font("Arial Rounded MT Bold", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSinRegistro.ForeColor = System.Drawing.Color.Brown;
-            this.lblSinRegistro.Location = new System.Drawing.Point(325, 373);
+            this.lblSinRegistro.Location = new System.Drawing.Point(327, 393);
             this.lblSinRegistro.Name = "lblSinRegistro";
             this.lblSinRegistro.Size = new System.Drawing.Size(329, 22);
             this.lblSinRegistro.TabIndex = 27;
@@ -231,6 +232,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.cmbxTipoHabitacion);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
@@ -239,20 +241,33 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.groupBox1.Location = new System.Drawing.Point(442, 65);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(473, 103);
+            this.groupBox1.Size = new System.Drawing.Size(473, 122);
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Habitacion";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(289, 86);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(170, 22);
+            this.checkBox1.TabIndex = 35;
+            this.checkBox1.Text = "Ver Disponibilidad";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // cmbxTipoHabitacion
             // 
+            this.cmbxTipoHabitacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbxTipoHabitacion.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbxTipoHabitacion.FormattingEnabled = true;
-            this.cmbxTipoHabitacion.Location = new System.Drawing.Point(172, 54);
+            this.cmbxTipoHabitacion.Location = new System.Drawing.Point(172, 48);
             this.cmbxTipoHabitacion.Name = "cmbxTipoHabitacion";
             this.cmbxTipoHabitacion.Size = new System.Drawing.Size(287, 26);
             this.cmbxTipoHabitacion.TabIndex = 3;
+            this.cmbxTipoHabitacion.SelectedIndexChanged += new System.EventHandler(this.cmbxTipoHabitacion_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -278,9 +293,10 @@
             // 
             // cmbxNivel
             // 
+            this.cmbxNivel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbxNivel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbxNivel.FormattingEnabled = true;
-            this.cmbxNivel.Location = new System.Drawing.Point(19, 54);
+            this.cmbxNivel.Location = new System.Drawing.Point(19, 48);
             this.cmbxNivel.Name = "cmbxNivel";
             this.cmbxNivel.Size = new System.Drawing.Size(121, 26);
             this.cmbxNivel.TabIndex = 0;
@@ -304,9 +320,9 @@
             this.groupBox2.Controls.Add(this.dateTimePickerFechaInicio);
             this.groupBox2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox2.Location = new System.Drawing.Point(442, 174);
+            this.groupBox2.Location = new System.Drawing.Point(442, 193);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(473, 167);
+            this.groupBox2.Size = new System.Drawing.Size(473, 197);
             this.groupBox2.TabIndex = 27;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Fecha y Hora";
@@ -316,7 +332,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label10.Location = new System.Drawing.Point(26, 117);
+            this.label10.Location = new System.Drawing.Point(26, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(100, 18);
             this.label10.TabIndex = 40;
@@ -324,10 +340,12 @@
             // 
             // dateTimePickerFechaFinal
             // 
-            this.dateTimePickerFechaFinal.Location = new System.Drawing.Point(137, 111);
+            this.dateTimePickerFechaFinal.CalendarFont = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePickerFechaFinal.Location = new System.Drawing.Point(137, 93);
             this.dateTimePickerFechaFinal.Name = "dateTimePickerFechaFinal";
             this.dateTimePickerFechaFinal.Size = new System.Drawing.Size(322, 26);
             this.dateTimePickerFechaFinal.TabIndex = 39;
+            this.dateTimePickerFechaFinal.ValueChanged += new System.EventHandler(this.dateTimePickerFechaFinal_ValueChanged);
             // 
             // label2
             // 
@@ -342,6 +360,7 @@
             // 
             // dateTimePickerFechaInicio
             // 
+            this.dateTimePickerFechaInicio.CalendarFont = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePickerFechaInicio.Location = new System.Drawing.Point(137, 41);
             this.dateTimePickerFechaInicio.Name = "dateTimePickerFechaInicio";
             this.dateTimePickerFechaInicio.Size = new System.Drawing.Size(322, 26);
@@ -365,7 +384,7 @@
             this.groupBoxDatosHuesped.ForeColor = System.Drawing.Color.White;
             this.groupBoxDatosHuesped.Location = new System.Drawing.Point(22, 65);
             this.groupBoxDatosHuesped.Name = "groupBoxDatosHuesped";
-            this.groupBoxDatosHuesped.Size = new System.Drawing.Size(414, 276);
+            this.groupBoxDatosHuesped.Size = new System.Drawing.Size(414, 325);
             this.groupBoxDatosHuesped.TabIndex = 33;
             this.groupBoxDatosHuesped.TabStop = false;
             this.groupBoxDatosHuesped.Text = "Datos Huesped";
@@ -376,7 +395,7 @@
             this.buttonCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonCancelar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCancelar.ForeColor = System.Drawing.Color.White;
-            this.buttonCancelar.Location = new System.Drawing.Point(273, 226);
+            this.buttonCancelar.Location = new System.Drawing.Point(276, 241);
             this.buttonCancelar.Name = "buttonCancelar";
             this.buttonCancelar.Size = new System.Drawing.Size(108, 28);
             this.buttonCancelar.TabIndex = 44;
@@ -390,7 +409,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(3, 155);
+            this.label1.Location = new System.Drawing.Point(6, 170);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 18);
             this.label1.TabIndex = 43;
@@ -402,7 +421,7 @@
             this.btnReservacion.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnReservacion.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReservacion.ForeColor = System.Drawing.Color.White;
-            this.btnReservacion.Location = new System.Drawing.Point(150, 226);
+            this.btnReservacion.Location = new System.Drawing.Point(153, 241);
             this.btnReservacion.Name = "btnReservacion";
             this.btnReservacion.Size = new System.Drawing.Size(108, 28);
             this.btnReservacion.TabIndex = 42;
@@ -416,7 +435,7 @@
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnModificar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.Color.White;
-            this.btnModificar.Location = new System.Drawing.Point(28, 226);
+            this.btnModificar.Location = new System.Drawing.Point(31, 241);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(102, 28);
             this.btnModificar.TabIndex = 41;
@@ -431,7 +450,7 @@
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnBuscar.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(321, 155);
+            this.btnBuscar.Location = new System.Drawing.Point(324, 170);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(87, 29);
             this.btnBuscar.TabIndex = 40;
@@ -444,7 +463,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label6.Location = new System.Drawing.Point(3, 120);
+            this.label6.Location = new System.Drawing.Point(6, 135);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 18);
             this.label6.TabIndex = 39;
@@ -455,7 +474,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label5.Location = new System.Drawing.Point(3, 77);
+            this.label5.Location = new System.Drawing.Point(6, 92);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(81, 18);
             this.label5.TabIndex = 38;
@@ -464,7 +483,7 @@
             // txtDPI
             // 
             this.txtDPI.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDPI.Location = new System.Drawing.Point(88, 156);
+            this.txtDPI.Location = new System.Drawing.Point(91, 171);
             this.txtDPI.Name = "txtDPI";
             this.txtDPI.Size = new System.Drawing.Size(227, 26);
             this.txtDPI.TabIndex = 37;
@@ -472,7 +491,7 @@
             // txtDireccion
             // 
             this.txtDireccion.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDireccion.Location = new System.Drawing.Point(88, 117);
+            this.txtDireccion.Location = new System.Drawing.Point(91, 132);
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(227, 26);
             this.txtDireccion.TabIndex = 36;
@@ -480,7 +499,7 @@
             // txtApellidos
             // 
             this.txtApellidos.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtApellidos.Location = new System.Drawing.Point(88, 77);
+            this.txtApellidos.Location = new System.Drawing.Point(91, 92);
             this.txtApellidos.Name = "txtApellidos";
             this.txtApellidos.Size = new System.Drawing.Size(227, 26);
             this.txtApellidos.TabIndex = 35;
@@ -488,7 +507,7 @@
             // txtNombre
             // 
             this.txtNombre.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(88, 39);
+            this.txtNombre.Location = new System.Drawing.Point(91, 54);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(227, 26);
             this.txtNombre.TabIndex = 34;
@@ -498,17 +517,38 @@
             this.Nombre.AutoSize = true;
             this.Nombre.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Nombre.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Nombre.Location = new System.Drawing.Point(3, 41);
+            this.Nombre.Location = new System.Drawing.Point(6, 56);
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(71, 18);
             this.Nombre.TabIndex = 33;
             this.Nombre.Text = "Nombre";
+            // 
+            // grpBoxDisponibilida
+            // 
+            this.grpBoxDisponibilida.Controls.Add(this.monthCalendar1);
+            this.grpBoxDisponibilida.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBoxDisponibilida.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.grpBoxDisponibilida.Location = new System.Drawing.Point(442, 194);
+            this.grpBoxDisponibilida.Name = "grpBoxDisponibilida";
+            this.grpBoxDisponibilida.Size = new System.Drawing.Size(473, 197);
+            this.grpBoxDisponibilida.TabIndex = 41;
+            this.grpBoxDisponibilida.TabStop = false;
+            this.grpBoxDisponibilida.Text = "Fechas Disponibles";
+            this.grpBoxDisponibilida.Visible = false;
+            // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(123, 23);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 37;
+            this.monthCalendar1.TitleBackColor = System.Drawing.Color.Wheat;
             // 
             // UCRegistro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(49)))), ((int)(((byte)(117)))));
+            this.Controls.Add(this.grpBoxDisponibilida);
             this.Controls.Add(this.groupBoxDatosHuesped);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dataGridView1);
@@ -526,6 +566,7 @@
             this.groupBox2.PerformLayout();
             this.groupBoxDatosHuesped.ResumeLayout(false);
             this.groupBoxDatosHuesped.PerformLayout();
+            this.grpBoxDisponibilida.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,9 +601,10 @@
         private System.Windows.Forms.Label Nombre;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaFinal;
+        private System.Windows.Forms.Button buttonCancelar;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdRegistro;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hbtcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nivel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Habitacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaReservacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Del;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hasta;
@@ -570,6 +612,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SALIDA;
         private System.Windows.Forms.DataGridViewComboBoxColumn CHECKIN;
         private System.Windows.Forms.DataGridViewComboBoxColumn CHECKOUT;
-        private System.Windows.Forms.Button buttonCancelar;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.GroupBox grpBoxDisponibilida;
+        private System.Windows.Forms.MonthCalendar monthCalendar1;
     }
 }
