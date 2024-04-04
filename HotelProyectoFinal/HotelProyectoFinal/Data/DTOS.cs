@@ -41,6 +41,38 @@ namespace HotelProyectoFinal
             public string Nivel {  get; set; }
             public string Comentario { get; set; }
 
+            public int IdHabitacion { get; set; }
+
+        }
+
+
+
+        public class Transaccion
+        {
+            public int IdTransaccion { get; set; }  
+
+            public string IdHuesped { get; set; }  
+            public int IdRegistro { set; get; }
+
+            public string TipoServicio { get; set; }
+            public string Comentario {  set; get; }
+            public DateTime Fecha { get; set; }
+
+            public int Cantidad { get; set; }
+
+            public decimal Total { get; set; }
+
+            public decimal precio { get; set; }
+
+
+
+        }
+
+
+        public class RangoFechas
+        {
+           public DateTime FechaInicio {  set; get; }
+           public DateTime FechaFinal {  set; get; } 
 
         }
     }

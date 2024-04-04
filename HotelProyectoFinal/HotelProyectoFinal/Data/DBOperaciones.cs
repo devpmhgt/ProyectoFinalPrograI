@@ -25,7 +25,7 @@ namespace HotelProyectoFinal
                                                join huespede in db.HUESPEDs
                                                on registro.IdHuesped equals huespede.DPI
                                                join asignacion in db.ASIGNACIONs
-                                               on registro.IdRegistro equals asignacion.IdRegistro // Cambiado a IdRegistro para asegurar la relación correcta
+                                               on registro.IdRegistro equals asignacion.IdRegistro
                                                join habitacion in db.HABITACIONs
                                                on asignacion.IdHabitacion equals habitacion.IdHabitacion
                                                where huespede.DPI == dpi && registro.ReservaActiva != "N"
@@ -41,7 +41,9 @@ namespace HotelProyectoFinal
                                                    Salida = registro.FechaHoraFinRegistro,
                                                    Nivel = habitacion.Nivel,
                                                    Comentario = habitacion.Comentario,
-                                                   IdHuesped = registro.IdHuesped
+                                                   IdHuesped = registro.IdHuesped,
+                                                   IdHabitacion = habitacion.IdHabitacion
+
                                                }).ToList();
 
 
@@ -149,7 +151,7 @@ namespace HotelProyectoFinal
                     var niveles = (from n in db.HABITACIONs
                                    select n.Nivel).Distinct().ToList();
 
-                    //Cargamos los niveles al combobox
+                    //Retornamos los datos
                     return niveles;
                 }
             } catch (Exception ex)
@@ -161,22 +163,6 @@ namespace HotelProyectoFinal
         }
 
 
-        public void CancelarReservacion(int idRegistro)
-        {
-            using (DBHOTELEntities db = new DBHOTELEntities())
-            {
 
-              var  Registro = db.REGISTROes.FirstOrDefault(r => r.IdRegistro  == idRegistro);
-
-
-                if(Registro != null && Registro.ReservaActiva ==  "A")
-                {
-                    Registro.ReservaActiva = "N";
-                    Registro.FechaReservaFinal = null;
-                    Registro.FechaReservaInicio = null;
-                    db.SaveChanges();
-                }
-            }
-        }
     }
 }

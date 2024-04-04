@@ -1,6 +1,7 @@
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.csproj.AssemblyReference.cache
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.Inicio.resources
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.Properties.Resources.resources
+C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.Views.Pago.resources
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.Views.UCRegistro.resources
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.UCServicios.resources
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.csproj.GenerateResource.cache
@@ -8,11 +9,15 @@ C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\HotelProyectoFinal.exe.config
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\HotelProyectoFinal.exe
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\HotelProyectoFinal.pdb
+C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\BouncyCastle.Crypto.dll
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\EntityFramework.dll
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\itextsharp.dll
+C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\itextsharp.xmlworker.dll
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\EntityFramework.xml
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\bin\Debug\itextsharp.xml
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.csproj.CopyComplete
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.exe
 C:\Users\Pablo\Desktop\ProyectoFinalProgaI\HotelProyectoFinal\HotelProyectoFinal\obj\Debug\HotelProyectoFinal.pdb

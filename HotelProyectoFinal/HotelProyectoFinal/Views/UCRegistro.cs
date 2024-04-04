@@ -1,4 +1,5 @@
 ﻿using HotelProyectoFinal.Models;
+using HotelProyectoFinal.Controllers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,17 +10,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static HotelProyectoFinal.DTOS;
+
 
 namespace HotelProyectoFinal.Views
 {
     public partial class UCRegistro : UserControl
     {
+        TransaccionController Transaccion = new TransaccionController();
 
-        DTOS.RegistroHuespedDTO CancelarReservacion = new DTOS.RegistroHuespedDTO();
+        DTOS.RegistroHuespedDTO registroHuesped = new DTOS.RegistroHuespedDTO();
+        RegistroController registro = new RegistroController();
+        HabitacionController habitacion = new HabitacionController();
+        HuespedController huesped = new HuespedController();
         DBOperaciones Operaciones = new DBOperaciones();
+        List<DTOS.Transaccion> transacciones = new List<DTOS.Transaccion>();
+        List<DTOS.RangoFechas> rangofechas = new List<RangoFechas>();
         public UCRegistro()
         {
             InitializeComponent();
+            
         }
 
         private void UCRegistro_Load_1(object sender, EventArgs e)
@@ -84,7 +94,7 @@ namespace HotelProyectoFinal.Views
 
                 dataGridView1.Rows[rowIndex].Cells["IDREGISTRO"].Value = registro.IdRegistro;
                 dataGridView1.Rows[rowIndex].Cells["NIVEL"].Value = registro.Nivel;
-                dataGridView1.Rows[rowIndex].Cells["HABITACION"].Value = registro.Comentario;
+                dataGridView1.Rows[rowIndex].Cells["Hbtcion"].Value = registro.Comentario;
                 dataGridView1.Rows[rowIndex].Cells["FECHARESERVACION"].Value = registro.FechaReservacion;
                 dataGridView1.Rows[rowIndex].Cells["DEL"].Value = registro.FechaReservaInicio;
                 dataGridView1.Rows[rowIndex].Cells["HASTA"].Value = registro.FechaReservaFinal;
@@ -153,126 +163,17 @@ namespace HotelProyectoFinal.Views
 
         private void btnReservacion_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //Se hace la reservacion 
+            registro.Reservacion(txtNombre.Text,
+                                txtApellidos.Text,
+                                txtDireccion.Text,
+                                txtDPI.Text,
+                                cmbxNivel.Text,
+                                cmbxTipoHabitacion.Text,
+                                dateTimePickerFechaInicio.Value,
+                                dateTimePickerFechaFinal.Value);
 
-
-
-                using (DBHOTELEntities db = new DBHOTELEntities())
-                {
-
-                    HUESPED Huesped = new HUESPED();
-                    REGISTRO Registro = new REGISTRO();
-                    ASIGNACION Asignacion = new ASIGNACION();
-                    TRANSACCION Transaccion = new TRANSACCION();
-                    TRANSACCION_DETALLE TransaccionDetalle = new TRANSACCION_DETALLE(); 
-
-
-
-                    if (Operaciones.ObtenerInformacionHuesped(txtDPI.Text).Count == 0)
-                    {
-                        Huesped.Nombres = txtNombre.Text;
-                        Huesped.Apellidos = txtApellidos.Text;
-                        Huesped.Direccion = txtDireccion.Text;
-                        Huesped.DPI = txtDPI.Text;
-
-                        var results = new System.Collections.Generic.List<ValidationResult>();
-                        var context = new ValidationContext(Huesped, serviceProvider: null, items: null);
-                        bool isValid = Validator.TryValidateObject(Huesped, context, results, true);
-
-
-                        if (!isValid)
-                        {
-                            // Mostrar los mensajes de error en la vista
-                            foreach (var validationResult in results)
-                            {
-                                MessageBox.Show(validationResult.ErrorMessage, "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            return;
-                        }
-
-                        db.HUESPEDs.Add(Huesped);
-                    }
-
-                    Registro.IdHuesped = txtDPI.Text;
-                    Registro.FechaHoraReserva = DateTime.Now;
-                    Registro.ReservaActiva = "A";
-                    db.REGISTROes.Add(Registro);
-
-                    var room = db.HABITACIONs.FirstOrDefault(n => n.Nivel == cmbxNivel.Text && n.Comentario == cmbxTipoHabitacion.Text);
-
-                    if (room != null)
-                    {
-
-                        DateTime dateTimeInicio = dateTimePickerFechaInicio.Value;
-                        TimeSpan checkinHour = new TimeSpan(14, 00, 0); 
-                        dateTimeInicio = dateTimeInicio.Date + checkinHour;
-
-                        DateTime dateTimeFinal = dateTimePickerFechaFinal.Value;
-                        TimeSpan checkoutHour = new TimeSpan(14, 00, 0);
-                        dateTimeFinal = dateTimeFinal.Date + checkinHour;
-
-
-
-                        var asignacionExistente = db.ASIGNACIONs
-                                                        .Where(a => a.IdHabitacion == room.IdHabitacion &&
-                                                                    !(a.REGISTRO.FechaReservaInicio >= dateTimeFinal ||
-                                                                      a.REGISTRO.FechaReservaFinal <= dateTimeInicio)).FirstOrDefault();
-
-
-
-
-                        if (asignacionExistente != null)
-                        {
-
-                            MessageBox.Show("Habitacion disponible hasta: "  + asignacionExistente.REGISTRO.FechaReservaFinal, "Habitacion", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                            return;
-
-                        }
-
-
-                        
-                        
-                        Transaccion.IdHabitacion = room.IdHabitacion;
-                        Transaccion.Total = room.Precio;
-                        Registro.FechaReservaInicio = dateTimeInicio;
-                        Registro.FechaReservaFinal = dateTimeFinal;  
-                        Asignacion.IdHabitacion = room.IdHabitacion;
-                    
-                  
-                    }
-
-
-                    Transaccion.IdRegistro = Registro.IdRegistro;
-                    Transaccion.IdTipoDoc = 2;
-                    Transaccion.Fecha = Registro.FechaHoraReserva;
-                    TransaccionDetalle.IdServicio = 8;
-                    TransaccionDetalle.IDTipoDoc = 2;
-                    TransaccionDetalle.Cantidad = 1;
-                    TransaccionDetalle.Total = Transaccion.Total;
-
-                    Asignacion.IdRegistro = Registro.IdRegistro;
-                    Asignacion.IdHuesped = Transaccion.IdHuesped = TransaccionDetalle.IdHuesped = txtDPI.Text;
-                     
-                    
-                    db.ASIGNACIONs.Add(Asignacion);
-                    db.TRANSACCIONs.Add(Transaccion);
-                    db.TRANSACCION_DETALLE.Add(TransaccionDetalle);
-                    db.SaveChanges();
-
-                }
-                limpiarCampos();
-
-                MessageBox.Show("Reserva efectuada correctamente", "Guardado Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
+            limpiarCampos();
         }
 
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -294,6 +195,14 @@ namespace HotelProyectoFinal.Views
                     if (nombreColumna == "CHECKOUT")
                     {
                         mensaje = "¿Estás seguro de Registrar la hora de salida de este usuario?";
+                        transacciones = Transaccion.ObtenerTodasLasTransacciones(txtDPI.Text);
+
+                        if (transacciones != null)
+                        {
+                            MessageBox.Show("No se puede hacer checkout dado que el cliente tiene un saldo pendiente");
+                            comboBox.SelectedIndex = -1;
+                            return;
+                        }
                     }
 
                     if (nombreColumna != "")
@@ -301,34 +210,15 @@ namespace HotelProyectoFinal.Views
 
                         DialogResult resultado = MessageBox.Show(mensaje, "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+
+
+
                         if (resultado == DialogResult.Yes)
                         {
-                            using (DBHOTELEntities db = new DBHOTELEntities())
-                            {
-                                int IdRegistro = Int32.Parse(dataGridView1.Rows[currentRow.Index].Cells[0].Value.ToString());
-                                var registro = db.REGISTROes.FirstOrDefault(r => r.IdRegistro == IdRegistro);
-
-                                if (registro != null && nombreColumna == "CHECKIN")
-                                {
-                                    registro.FechaHoraIngreso = DateTime.Now;
-                                    db.SaveChanges();
-                                    dataGridView1.Rows.Clear();
-                                    var registros = Operaciones.ObtenerHuespedesConReserva(registro.IdHuesped);
-                                    ActualizarDataGrid(registros);
-                                }
-                                else
-                                {
-                                    registro.FechaHoraFinRegistro = DateTime.Now;
-                                    registro.ReservaActiva = "N";
-                                    db.SaveChanges();
-                                    dataGridView1.Rows.Clear();
-                                    var registros = Operaciones.ObtenerHuespedesConReserva(registro.IdHuesped);
-                                    ActualizarDataGrid(registros);
-
-                                }
-
-
-                            }
+                            int IdRegistro = Int32.Parse(dataGridView1.Rows[currentRow.Index].Cells[0].Value.ToString());
+                            dataGridView1.Rows.Clear();
+                            var registros = Operaciones.ObtenerHuespedesConReserva(registro.CheckInCheckOut(IdRegistro, nombreColumna).FirstOrDefault().IdHuesped);
+                            ActualizarDataGrid(registros);
 
                         }
                     }
@@ -355,70 +245,83 @@ namespace HotelProyectoFinal.Views
 
         private void cmbxNivel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (DBHOTELEntities db = new DBHOTELEntities())
+            cmbxTipoHabitacion.Items.Clear();
+            
+            //Se obtienen las habitaciones por cada nivel del Hotel
+            var habitaciones = habitacion.ObtenerHabitacionesPorNivel(cmbxNivel.Text);
+            
+            //Se cargan los niveles dependiendo del nivel seleccionado
+            foreach (var habitacion in habitaciones)
             {
+                cmbxTipoHabitacion.Items.Add(habitacion.Comentario);
+            }
 
-                cmbxTipoHabitacion.Items.Clear();
+            if (habitaciones != null)
+            {
+                cmbxTipoHabitacion.SelectedIndex = 0;
 
-                //Consultamos las habitaciones que esten Disponibles
-                var habitaciones = from h in db.HABITACIONs
-                                   where h.Nivel == cmbxNivel.Text
-                                   select h;
 
-                //Cargamos las habitaciones al combobox
-                foreach (var habitacion in habitaciones)
+                if (monthCalendar1.Visible == true)
                 {
-                    cmbxTipoHabitacion.Items.Add(habitacion.Comentario);
-                }
+                    rangofechas = habitacion.ObtenerDisponibilidad(cmbxNivel.Text, cmbxTipoHabitacion.Text);
+                    monthCalendar1.RemoveAllBoldedDates();
 
-                if (habitaciones != null)
-                {
-                    cmbxTipoHabitacion.SelectedIndex = 0;
+                    foreach (var rango in rangofechas)
+                    {
+                        DateTime fechaInicio = rango.FechaInicio;
+                        DateTime fechaFin = rango.FechaFinal;
+                        // Calcular todas las fechas dentro del rango
+                        while (fechaInicio <= fechaFin)
+                        {
+                            monthCalendar1.AddBoldedDate(fechaInicio);
+
+                            fechaInicio = fechaInicio.AddDays(1);
+                        }
+                    }
+                    monthCalendar1.UpdateBoldedDates();
                 }
             }
+
         }
 
         private void btnModificar_Click_1(object sender, EventArgs e)
         {
-            DialogResult resultado = MessageBox.Show("¿Estás seguro que deseas modificar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult resultado = MessageBox.Show("¿Estás seguro que deseas modificar este registro?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
 
-            if (resultado == DialogResult.Yes)
+            if (resultado == DialogResult.Yes && buttonCancelar.Visible == false)
             {
+                huesped.ModificarInformacionHuesped(txtNombre.Text,
+                                                    txtApellidos.Text,
+                                                    txtDireccion.Text,
+                                                    txtDPI.Text);
+            }
 
-                try
-                {
-                    using (DBHOTELEntities db = new DBHOTELEntities())
-                    {
 
-                        var huesped = db.HUESPEDs.FirstOrDefault(h => h.DPI == txtDPI.Text);
 
-                        if (huesped != null)
-                        {
-                            huesped.Nombres = txtNombre.Text;
-                            huesped.Apellidos = txtApellidos.Text;
-                            huesped.Direccion = txtDireccion.Text;
-                            huesped.DPI = txtDPI.Text;
-                            db.SaveChanges();
-                            MessageBox.Show("Registro actualizado correctamente.", "Modificacion de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            limpiarCampos();
+            if (resultado == DialogResult.Yes && buttonCancelar.Visible == true)
+            {
+                registro.ModificarReservacion(registroHuesped.IdRegistro,
+                                              dateTimePickerFechaInicio.Value,
+                                              dateTimePickerFechaFinal.Value,
+                                              cmbxNivel.Text,
+                                              cmbxTipoHabitacion.Text);
 
-                        }
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                }
 
             }
+
+
+            dataGridView1.Rows.Clear();
+
+            var registros = Operaciones.ObtenerHuespedesConReserva(txtDPI.Text);
+
+
+            ActualizarDataGrid(registros);
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Asegúrate de que se haya hecho clic en una fila (no en el encabezado)
+            if (e.RowIndex >= 0) // Asegurar que se haya hecho clic en una fila (no en el encabezado)
             {
                 DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
 
@@ -428,12 +331,13 @@ namespace HotelProyectoFinal.Views
                 dateTimePickerFechaFinal.Value = DateTime.Parse(fila.Cells["HASTA"].Value.ToString());
 
 
-                CancelarReservacion.IdRegistro = Int32.Parse(fila.Cells["IDREGISTRO"].Value.ToString());
-                CancelarReservacion.Nivel = fila.Cells["NIVEL"].Value.ToString();
+                registroHuesped.IdRegistro = Int32.Parse(fila.Cells["IDREGISTRO"].Value.ToString());
+                registroHuesped.Nivel = fila.Cells["NIVEL"].Value.ToString();
+                registroHuesped.Comentario = cmbxTipoHabitacion.Text = fila.Cells["HABITACION"].Value.ToString();
+                registroHuesped.FechaReservaInicio = DateTime.Parse(fila.Cells["DEL"].Value.ToString());
+                registroHuesped.FechaReservaFinal = DateTime.Parse(fila.Cells["HASTA"].Value.ToString());
 
-                CancelarReservacion.Ingreso = (fila.Cells["INGRESO"].Value !=null)? DateTime.Parse(fila.Cells["INGRESO"].Value.ToString()) : (DateTime?)null;
-
-
+                registroHuesped.Ingreso = (fila.Cells["INGRESO"].Value !=null)? DateTime.Parse(fila.Cells["INGRESO"].Value.ToString()) : (DateTime?)null;
 
                 buttonCancelar.Visible = true;
             }
@@ -443,13 +347,13 @@ namespace HotelProyectoFinal.Views
 
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
-            if (CancelarReservacion.Ingreso !=null)
+            if (registroHuesped.Ingreso !=null)
             {
                 MessageBox.Show("Error al cancelar la reservacion, el cliente ya hizo checkin", "Cancelacion de Reserva", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Operaciones.CancelarReservacion(CancelarReservacion.IdRegistro);
+            registro.CancelarReservacion(registroHuesped.IdRegistro);
             ActualizarDataGrid(Operaciones.ObtenerHuespedesConReserva(txtDPI.Text));
             buttonCancelar.Visible=false;
             cmbxNivel.Text = "";
@@ -462,6 +366,65 @@ namespace HotelProyectoFinal.Views
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
+
+        }
+
+        private void dateTimePickerFechaFinal_ValueChanged(object sender, EventArgs e)
+        {
+            habitacion.Disponibilidad(cmbxNivel.Text,
+                                              cmbxTipoHabitacion.Text,
+                                              dateTimePickerFechaInicio.Value,
+                                              dateTimePickerFechaFinal.Value);
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBox1.Checked)
+            {
+                grpBoxDisponibilida.Visible = true;
+
+                rangofechas = habitacion.ObtenerDisponibilidad(cmbxNivel.Text, cmbxTipoHabitacion.Text);
+                monthCalendar1.RemoveAllBoldedDates();
+                foreach (var rango in rangofechas)
+                {
+                    DateTime fechaInicio = rango.FechaInicio;
+                    DateTime fechaFin = rango.FechaFinal;
+                    // Calcular todas las fechas dentro del rango
+                    while (fechaInicio <= fechaFin)
+                    {
+                        monthCalendar1.AddBoldedDate(fechaInicio);
+                        
+                        fechaInicio = fechaInicio.AddDays(1);
+                    }
+                }
+                monthCalendar1.UpdateBoldedDates();
+
+            }
+            else
+            {
+                grpBoxDisponibilida.Visible = false;
+            }
+        }
+
+        private void cmbxTipoHabitacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+                rangofechas = habitacion.ObtenerDisponibilidad(cmbxNivel.Text, cmbxTipoHabitacion.Text);
+                monthCalendar1.RemoveAllBoldedDates();
+
+                foreach (var rango in rangofechas)
+                {
+                    DateTime fechaInicio = rango.FechaInicio;
+                    DateTime fechaFin = rango.FechaFinal;
+                    // Calcular todas las fechas dentro del rango
+                    while (fechaInicio <= fechaFin)
+                    {
+                        monthCalendar1.AddBoldedDate(fechaInicio);
+
+                        fechaInicio = fechaInicio.AddDays(1);
+                    }
+                }
+                monthCalendar1.UpdateBoldedDates();
 
         }
     }

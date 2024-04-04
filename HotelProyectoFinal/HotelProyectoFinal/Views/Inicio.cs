@@ -76,10 +76,6 @@ namespace HotelProyectoFinal
         }
 
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void iconPictureLogo_Click(object sender, EventArgs e)
         {
@@ -119,6 +115,13 @@ namespace HotelProyectoFinal
         private void iconButtonPago_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBcolors.color3);
+
+            Pago pago = new Pago();
+            PanelVistas.Controls.Clear();
+            PanelVistas.Controls.Add(pago);
+
+            // Ajustar el tamaño del formulario secundario al tamaño del panel contenedor
+            pago.Dock = DockStyle.Fill;
         }
     }
 }

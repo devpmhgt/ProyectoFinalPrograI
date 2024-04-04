@@ -30,14 +30,16 @@ namespace HotelProyectoFinal.Models
         public virtual DbSet<ASIGNACION> ASIGNACIONs { get; set; }
         public virtual DbSet<HABITACION> HABITACIONs { get; set; }
         public virtual DbSet<HUESPED> HUESPEDs { get; set; }
-        public virtual DbSet<REGISTRO> REGISTROes { get; set; }
         public virtual DbSet<SERVICIO> SERVICIOs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TIPO> TIPOes { get; set; }
         public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         public virtual DbSet<TipoServicio> TipoServicios { get; set; }
-        public virtual DbSet<TRANSACCION> TRANSACCIONs { get; set; }
         public virtual DbSet<TRANSACCION_DETALLE> TRANSACCION_DETALLE { get; set; }
+        public virtual DbSet<TRANSACCION> TRANSACCIONs { get; set; }
+        public virtual DbSet<FACTURA> FACTURAs { get; set; }
+        public virtual DbSet<REGISTRO> REGISTROes { get; set; }
+        public virtual DbSet<FACTURA_DETALLE> FACTURA_DETALLE { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
